@@ -1,0 +1,11 @@
+{% extends 'vendor/base.html' %}
+
+{% block content %}
+<form method="post">
+Product Name:<input type="text" value="{{ product.prod_name }}" name="prod_name"><br>
+Product Category:<input type="text" value="{{ product.category.cat_name }}" name="prod_cat"><br>
+Quantity<input type="number" value="{{ product.qty }}" name="prod_qty"><br>
+Cost<input type="number" value="{{ product.cost }}" name="prod_cost"><br>
+<input type="submit" value="Update">
+</form>
+{% endblock %}
