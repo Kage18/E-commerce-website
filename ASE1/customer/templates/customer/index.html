@@ -1,6 +1,7 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
 {% for foo in cat %}
-    <h1>{{ foo.cat_name }}</h1>
-    {% for prod in foo.product_set.all %}
-        {{ prod }}<br>
-    {% endfor %}
+    <a href={% url 'customer:items' foo.id %}> <h3>{{ foo.cat_name }}</h3></a>
 {% endfor %}
+{% endblock %}

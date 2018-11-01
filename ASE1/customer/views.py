@@ -15,7 +15,14 @@ def home(request):
 
 
 def index(request):
-    return render(request, 'vendor/base.html')
+    return render(request, 'customer/base.html')
+
+
+class ItemsView(generic.DetailView):
+    template_name = 'customer/items.html'
+    model = Category
+    context_object_name = 'cat'
+
 
 
 class IndexView(generic.ListView):
