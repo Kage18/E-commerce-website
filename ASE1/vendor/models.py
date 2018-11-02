@@ -22,9 +22,9 @@ class Product(models.Model):
         return self.prod_name
 
 
-class VendorProfile(models.Model):
-    Vendor = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.IntegerField(null=True)
-
-    def __str__(self):
-        return self.Vendor.username
+# class VendorProfile(models.Model):
+#     Vendor = models.OneToOneField(User, on_delete=models.CASCADE)
+#     phone_number = models.IntegerField(null=True)
+#
+#     def __str__(self):
+#         return self.Vendor.username
