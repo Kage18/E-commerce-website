@@ -1,0 +1,7 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+{% for foo in cat %}
+    <a href={% url 'customer:items' foo.id %}> <h3>{{ foo.cat_name }}</h3></a>
+{% endfor %}
+{% endblock %}

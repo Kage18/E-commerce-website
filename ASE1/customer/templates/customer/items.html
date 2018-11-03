@@ -1,0 +1,7 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+    {% for prod in cat.product_set.all %}
+            {{ prod }}<br>
+        {% endfor %}
+{% endblock %}

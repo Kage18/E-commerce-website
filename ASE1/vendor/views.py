@@ -36,7 +36,7 @@ def view_products(request):
     products = cat.product_set.all()
     return render(request, 'vendor/view_products.html', {'products': products})
 
-
+  
 def modify_products(request, id):
     product = Product.objects.get(pk=id)
     if request.method == 'POST':
@@ -66,7 +66,6 @@ def vendor_signup(request):
             contact_number = form.cleaned_data['contact_number']
             # new_vendor = VendorProfile(Vendor=user,phone_number=contact_number)
             VendorProfile.objects.create(Vendor=user, phone_number=contact_number)
-
             send_mail('Hello vendor', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
                       fail_silently=True)
             login(request, user)
