@@ -21,7 +21,6 @@ class Product(models.Model):
     def __str__(self):
         return self.prod_name
 
-
 class VendorProfile(models.Model):
     Vendor = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.IntegerField(null=True)

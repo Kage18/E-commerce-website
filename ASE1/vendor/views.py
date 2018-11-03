@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from vendor.forms import VendorCreationForm, ProductsAdd
-from vendor.models import VendorProfile, Product
+from vendor.models import VendorProfile, Product, Category
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
@@ -23,7 +23,7 @@ def add_products(request):
         form = ProductsAdd(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'vendor/modify_product.html')
+            return redirect('vendor:view_products')
     else:
         form_add = ProductsAdd()
     return render(request, 'vendor/add_products.html', {'form': form_add})
@@ -32,12 +32,29 @@ def add_products(request):
 # To display items whose qty is less than 50
 
 def view_products(request):
-    products = Product.objects.all()
+    cat = Category.objects.get(cat_name='Groceries')
+    products = cat.product_set.all()
     return render(request, 'vendor/view_products.html', {'products': products})
 
+  
+def modify_products(request, id):
+    product = Product.objects.get(pk=id)
+    if request.method == 'POST':
+        name = request.POST['prod_name']
+        cat = request.POST['prod_cat']
+        brand = request.POST['prod_brand']
+        qty = request.POST['prod_qty']
+        cost = request.POST['prod_cost']
 
-def modify_products(request):
-    pass
+        product.prod_name = name
+        product.qty = qty
+        product.cost = cost
+        product.category.cat_name = cat
+        product.brand = brand
+        product.save()
+        return redirect('vendor:view_products')
+
+    return render(request, 'vendor/modify_product.html', {'product': product})
 
 
 def vendor_signup(request):
@@ -49,8 +66,8 @@ def vendor_signup(request):
             contact_number = form.cleaned_data['contact_number']
             # new_vendor = VendorProfile(Vendor=user,phone_number=contact_number)
             VendorProfile.objects.create(Vendor=user, phone_number=contact_number)
-
-            send_mail('Hello vendor', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
+            send_mail('Hello vendor', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
+                      fail_silently=True)
             login(request, user)
             return redirect('vendor:view_products')
     else:
