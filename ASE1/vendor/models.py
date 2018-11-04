@@ -17,7 +17,7 @@ class Product(models.Model):
     qty = models.IntegerField(default=0)
     cost = models.IntegerField(default=0)
     brand = models.CharField(max_length=150, blank=True)
-
+    prod_pic = models.FileField()
     # created_at = models.TimeField(default=datetime.now())
     # updated_at = models.TimeField(default=datetime.now())
     # photo = models.ImageField(upload_to='documents/', blank=True)

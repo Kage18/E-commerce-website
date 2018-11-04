@@ -10,6 +10,7 @@
         <li>
         Name: <a href="{% url 'vendor:modify_products'  item.id %}" target="_blank"><b>{{ item.prod_name }}</b></a>
         <ul>
+        <img src="{{ item.prod_pic.url }}" width="200" height="200">
         <li>Category: <b>{{ item.category.cat_name }}</b></li>
         <li>Quantity: <b>{{ item.qty }}</b></li>
         <li>Price: <b>{{ item.cost }}</b></li>
