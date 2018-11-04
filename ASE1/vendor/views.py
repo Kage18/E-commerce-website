@@ -40,6 +40,7 @@ def add_products(request):
         if form.is_valid():
             form.save()
             return redirect('vendor:view_products')
+
     else:
         form = ProductsAdd()
     return render(request, 'vendor/add_products.html', {'form': form})
