@@ -7,6 +7,8 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views import generic
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def home(request):
@@ -17,6 +19,20 @@ def index(request):
     return render(request, 'vendor/base.html')
 
 
+class ItemsView(generic.DetailView):
+    template_name = 'customer/items.html'
+    model = Category
+    context_object_name = 'cat'
+
+
+class IndexView(generic.ListView):
+    template_name = 'customer/index.html'
+    context_object_name = 'cat'
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+
 @login_required(login_url='vendor:login')
 def add_products(request):
     if request.method == 'POST':
@@ -25,18 +41,23 @@ def add_products(request):
             form.save()
             return redirect('vendor:view_products')
     else:
-        form_add = ProductsAdd()
-    return render(request, 'vendor/add_products.html', {'form': form_add})
+        form = ProductsAdd()
+    return render(request, 'vendor/add_products.html', {'form': form})
 
 
 # To display items whose qty is less than 50
 
 def view_products(request):
-    cat = Category.objects.get(cat_name='Groceries')
-    products = cat.product_set.all()
+    # cat = Category.objects.get(cat_name='Groceries')
+    product_list = Product.objects.all()
+
+    paginator = Paginator(product_list, 10)
+
+    page = request.GET.get('page')
+    products = paginator.get_page(page)
     return render(request, 'vendor/view_products.html', {'products': products})
 
-  
+
 def modify_products(request, id):
     product = Product.objects.get(pk=id)
     if request.method == 'POST':

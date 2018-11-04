@@ -5,11 +5,14 @@ from django.contrib.auth import login, logout
 from django.core.mail import send_mail
 from django.conf import settings
 from customer.models import CustomerProfile
-from customer.forms import CustomerCreationFor
+from customer.forms import CustomerCreationForm
 from django.views import generic
 from vendor.models import Category
+
+
 def home(request):
     return HttpResponse('Dear Customer, welcome to the home page!')
+
 
 def index(request):
     return render(request, 'customer/base.html')
@@ -20,12 +23,14 @@ class ItemsView(generic.DetailView):
     model = Category
     context_object_name = 'cat'
 
+
 class IndexView(generic.ListView):
     template_name = 'customer/index.html'
     context_object_name = 'cat'
 
     def get_queryset(self):
         return Category.objects.all()
+
 
 def customer_signup(request):
     if request.method == 'POST':
@@ -34,7 +39,8 @@ def customer_signup(request):
             user = form.save()
             contact_number = form.cleaned_data['contact_number']
             CustomerProfile.objects.create(Customer=user, phone_number=contact_number)
-            send_mail('Hello Customer', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
+            send_mail('Hello Customer', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
+                      fail_silently=True)
             login(request, user)
             return redirect('customer:home')
     else:
