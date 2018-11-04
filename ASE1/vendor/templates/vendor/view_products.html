@@ -2,9 +2,13 @@
 
 {% block content %}
     {% if products %}
+        {% if user.is_authenticated %}
+        <h2><a href="{% url 'vendor:add_products' %}">Click here to add products</a></h2>
+        {% endif %}
         <ol>
         {% for item in products %}
-        <li>Name: <a href="{% url 'vendor:modify_products'  item.id %}" target="_blank"><b>{{ item.prod_name }}</b></a>
+        <li>
+        Name: <a href="{% url 'vendor:modify_products'  item.id %}" target="_blank"><b>{{ item.prod_name }}</b></a>
         <ul>
         <li>Category: <b>{{ item.category.cat_name }}</b></li>
         <li>Quantity: <b>{{ item.qty }}</b></li>
@@ -12,8 +16,10 @@
         {% if item.brand|length > 0 %}
             <li>Brand: <b>{{ item.brand }}</b></li>
         {% endif %}
+        <li><a href="{% url 'vendor:delete_product' item.id %}">Click here to delete this product</a></li>
         </ul>
         </li>
+        <br>
         {% endfor %}
         </ol>
     {% else %}

@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from django.contrib.auth.models import User
 
 
@@ -16,10 +17,14 @@ class Product(models.Model):
     qty = models.IntegerField(default=0)
     cost = models.IntegerField(default=0)
     brand = models.CharField(max_length=150, blank=True)
+
+    # created_at = models.TimeField(default=datetime.now())
+    # updated_at = models.TimeField(default=datetime.now())
     # photo = models.ImageField(upload_to='documents/', blank=True)
 
     def __str__(self):
         return self.prod_name
+
 
 class VendorProfile(models.Model):
     Vendor = models.OneToOneField(User, on_delete=models.CASCADE)

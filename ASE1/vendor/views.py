@@ -49,11 +49,9 @@ def add_products(request):
 # To display items whose qty is less than 50
 
 def view_products(request):
-    # cat = Category.objects.get(cat_name='Groceries')
-    product_list = Product.objects.all()
+    product_list = Product.objects.all().order_by('prod_name')
 
     paginator = Paginator(product_list, 10)
-
     page = request.GET.get('page')
     products = paginator.get_page(page)
     return render(request, 'vendor/view_products.html', {'products': products})
@@ -77,6 +75,13 @@ def modify_products(request, id):
         return redirect('vendor:view_products')
 
     return render(request, 'vendor/modify_product.html', {'product': product})
+
+
+def delete_product(request, id):
+    product = Product.objects.get(pk=id)
+    name = product.prod_name
+    product.delete()
+    return render(request, 'vendor/deleted.html', {'name': name})
 
 
 def vendor_signup(request):
