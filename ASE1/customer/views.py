@@ -18,6 +18,26 @@ def index(request):
     return render(request, 'customer/base.html')
 
 
+def profile(request):
+    a = request.user
+    if request.method == 'POST':
+        username = request.POST['username']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+
+        a.username = username
+        a.first_name = first_name
+        a.last_name = last_name
+        a.email = email
+        a.phone_number = phone
+        a.save()
+        return redirect('customer:home')
+
+    return render(request, 'customer/profile.html')
+
+
 class ItemsView(generic.DetailView):
     template_name = 'customer/items.html'
     model = Category

@@ -13,9 +13,13 @@
     <form method="post" action="{% url 'customer:logout' %}">
         {% csrf_token %}
         <input type="submit" value="Logout">
+    <a href="{% url 'customer:profile' %}">UserProfile</a>
     </form>
+
 {% else %}
     <a href="{% url 'customer:login' %}">Click here to login</a>
+
+
 {% endif %}
 
 {% block content %}
