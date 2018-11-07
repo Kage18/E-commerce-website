@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'vendor',
     'customer',
+    'cart',
 ]
 
 EMAIL_USE_TLS = True

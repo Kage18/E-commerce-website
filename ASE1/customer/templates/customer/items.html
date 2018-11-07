@@ -1,5 +1,24 @@
 {% extends 'customer/base.html' %}
 
+
+{% block scripts %}
+<script>
+    $(".cart-add").click(function () {
+        let span = $(this).parent();
+
+        $.ajax({
+            url: span.attr("add_url"),
+        });
+
+        $(this).remove();
+        $(span).append($('<a/>')
+            .attr('href', "{% url 'cart:order_summary' %}")
+            .addClass("btn btn-warning")
+            .text("Go to Cart"));
+    });
+</script>
+{% endblock %}
+
 {% block content %}
     {% for prod in cat.product_set.all %}
         <ol>
@@ -8,11 +27,19 @@
                 <ul>
                     <img src="{{ prod.prod_pic.url }}" width="200" height="200">
                     <li>Category: <b>{{ prod.category.cat_name }}</b></li>
-                    <li>Quantity: <b>{{ prod.qty }}</b></li>
+                    <li>Quantity: <b>{{ prod.id }}</b></li>
                     <li>Price: <b>{{ prod.cost }}</b></li>
                     {% if prod.brand|length > 0 %}
                         <li>Brand: <b>{{ prod.brand }}</b></li>
                     {% endif %}
+                    <span id="prod_{{ prod.id }}" add_url="{% url 'cart:add_to_cart' prod.id cat.id%}">
+                        {% if prod in current_order_products %}
+                            <a href="{% url 'cart:order_summary' %}"  class="btn btn-warning">Go to Cart</a>
+                        {% else %}
+                            <a class="btn btn-warning cart-add">Add to Cart</a>
+{#                            <a href="{% url 'cart:add_to_cart' prod.id cat.id%}" class="btn btn-warning cart-add">Add to Cart</a>#}
+                        {% endif %}
+                    </span>
                 </ul>
             </li>
             <br>

@@ -7,8 +7,8 @@ from django.conf import settings
 from customer.models import CustomerProfile
 from customer.forms import CustomerCreationForm
 from django.views import generic
-from vendor.models import Category
-
+from vendor.models import Category, Product
+from cart.models import order
 
 def home(request):
     return HttpResponse('Dear Customer, welcome to the home page!')
@@ -31,17 +31,29 @@ def profile(request):
         a.first_name = first_name
         a.last_name = last_name
         a.email = email
-        a.phone_number = phone
+        a.cus.phone_number = phone
+        a.cus.save()
         a.save()
         return redirect('customer:home')
 
     return render(request, 'customer/profile.html')
 
 
-class ItemsView(generic.DetailView):
-    template_name = 'customer/items.html'
-    model = Category
-    context_object_name = 'cat'
+def ItemsView(request,pk):
+    cat = Category.objects.get(id=pk)
+    filtered_orders = order.objects.filter(owner=request.user.cus, is_ordered=False)
+    current_order_products = []
+    if filtered_orders.exists():
+        user_order = filtered_orders[0]
+        user_order_items = user_order.items.all()
+        current_order_products = [product.product for product in user_order_items]
+
+    context = {
+        'cat': cat,
+        'current_order_products': current_order_products
+    }
+
+    return render(request, "customer/items.html", context)
 
 
 class IndexView(generic.ListView):
@@ -58,7 +70,7 @@ def customer_signup(request):
         if form.is_valid():
             user = form.save()
             contact_number = form.cleaned_data['contact_number']
-            CustomerProfile.objects.create(Customer=user, phone_number=contact_number)
+            #CustomerProfile.objects.create(Customer=user, phone_number=contact_number)
             send_mail('Hello Customer', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
                       fail_silently=True)
             login(request, user)

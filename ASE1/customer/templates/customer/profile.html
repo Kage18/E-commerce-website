@@ -9,7 +9,7 @@
             Firstname: <input type="text" value="{{ user.first_name }}" name="first_name"><br>
             Lastname : <input type="text" value="{{ user.last_name }}" name="last_name"><br>
             Email    : <input type="email" value="{{ user.email }}" name="email"><br>
-            phone    : <input type="number" value="{{ user.Vendor.phone_number }}" name="phone"><br>
+            phone    : <input type="number" value="{{ user.cus.phone_number }}" name="phone"><br>
             <input type="submit" value="Update">
         </form>
     {% endif %}
