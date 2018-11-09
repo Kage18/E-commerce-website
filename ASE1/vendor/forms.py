@@ -9,8 +9,10 @@ class ProductsAdd(forms.ModelForm):
         model = Product
         fields = '__all__'
 
+
 def email_check(user):
     return user.is_vendor
+
 
 class VendorCreationForm(UserCreationForm):
     contact_number = forms.IntegerField()

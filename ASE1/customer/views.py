@@ -7,6 +7,9 @@ from django.views import generic
 from vendor.models import Category
 from cart.models import order
 from customer.models import CustomerProfile
+from ASE1.decorators import customer_required
+from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     return HttpResponse('Dear Customer, welcome to the home page!')
@@ -105,6 +108,7 @@ def customer_login(request):
     return render(request, 'customer/login.html', {'form': form})
 
 
+@login_required
 def customer_logout(request):
     logout(request)
     return render(request, 'customer/logout.html')

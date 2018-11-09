@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views import generic
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
+from ASE1.decorators import vendor_required
 
 
 def home(request):
@@ -34,6 +35,7 @@ class IndexView(generic.ListView):
 
 
 @login_required(login_url='vendor:login')
+@vendor_required
 def add_products(request):
     if request.method == 'POST':
         form = ProductsAdd(request.POST)
@@ -46,8 +48,8 @@ def add_products(request):
     return render(request, 'vendor/add_products.html', {'form': form})
 
 
-# To display items whose qty is less than 50
-
+@login_required(login_url='vendor:login')
+@vendor_required
 def view_products(request):
     product_list = Product.objects.all().order_by('prod_name')
 
@@ -57,6 +59,8 @@ def view_products(request):
     return render(request, 'vendor/view_products.html', {'products': products})
 
 
+@login_required(login_url='vendor:login')
+@vendor_required
 def modify_products(request, id):
     product = Product.objects.get(pk=id)
     if request.method == 'POST':
@@ -77,6 +81,8 @@ def modify_products(request, id):
     return render(request, 'vendor/modify_product.html', {'product': product})
 
 
+@login_required(login_url='vendor:login')
+@vendor_required
 def delete_product(request, id):
     product = Product.objects.get(pk=id)
     name = product.prod_name
@@ -93,8 +99,8 @@ def vendor_signup(request):
             contact_number = form.cleaned_data['contact_number']
             # new_vendor = VendorProfile(Vendor=user,phone_number=contact_number)
             VendorProfile.objects.create(Vendor=user, phone_number=contact_number)
-            send_mail('Hello vendor', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
-                      fail_silently=True)
+            # send_mail('Hello vendor', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
+            #           fail_silently=True)
             login(request, user)
             return redirect('vendor:view_products')
     else:
@@ -118,8 +124,5 @@ def vendor_login(request):
 
 
 def vendor_logout(request):
-    if request.method == 'POST':
-        logout(request)
-        return render(request, 'vendor/logout.html')
-    else:
-        return HttpResponse('Cannot hard code logout')
+    logout(request)
+    return render(request, 'vendor/logout.html')
