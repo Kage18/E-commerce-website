@@ -22,7 +22,7 @@ def get_user_pending_order(request):
 def add_to_cart(request, **kwargs):
     user_profile = get_object_or_404(CustomerProfile, Customer=request.user)
     product = Product.objects.get(id=kwargs.get('item_id'))
-
+    print("lshsldlbka")
     order_item, status = orderitem.objects.get_or_create(product=product)
     user_order, status = order.objects.get_or_create(owner=user_profile, is_ordered=False)
 

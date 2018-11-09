@@ -3,19 +3,24 @@
 
 {% block scripts %}
 <script>
-    $(".cart-add").click(function () {
-        let span = $(this).parent();
 
-        $.ajax({
-            url: span.attr("add_url"),
+        $(".cart-add").click(function () {
+            let span = $(this).parent();
+
+            $.ajax({
+                url: span.attr("add_url"),
+            });
+            {% if user.is_authenticated %}
+                $(this).remove();
+                $(span).append($('<a/>')
+                    .attr('href', "{% url 'cart:order_summary' %}")
+                    .addClass("btn btn-warning")
+                    .text("Go to Cart"));
+            {% else %}
+                window.location.replace('/customer/login/')
+            {% endif %}
         });
 
-        $(this).remove();
-        $(span).append($('<a/>')
-            .attr('href', "{% url 'cart:order_summary' %}")
-            .addClass("btn btn-warning")
-            .text("Go to Cart"));
-    });
 </script>
 {% endblock %}
 
@@ -33,12 +38,8 @@
                         <li>Brand: <b>{{ prod.brand }}</b></li>
                     {% endif %}
                     <span id="prod_{{ prod.id }}" add_url="{% url 'cart:add_to_cart' prod.id cat.id%}">
-                        {% if prod in current_order_products %}
-                            <a href="{% url 'cart:order_summary' %}"  class="btn btn-warning">Go to Cart</a>
-                        {% else %}
                             <a class="btn btn-warning cart-add">Add to Cart</a>
-{#                            <a href="{% url 'cart:add_to_cart' prod.id cat.id%}" class="btn btn-warning cart-add">Add to Cart</a>#}
-                        {% endif %}
+
                     </span>
                 </ul>
             </li>
