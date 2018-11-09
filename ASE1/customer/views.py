@@ -10,6 +10,7 @@ from django.views import generic
 from vendor.models import Category, Product
 from cart.models import order
 
+
 def home(request):
     return HttpResponse('Dear Customer, welcome to the home page!')
 
@@ -39,7 +40,7 @@ def profile(request):
     return render(request, 'customer/profile.html')
 
 
-def ItemsView(request,pk):
+def itemsview(request, pk):
     cat = Category.objects.get(id=pk)
     current_order_products = []
     if request.user.is_authenticated:
@@ -50,20 +51,30 @@ def ItemsView(request,pk):
             current_order_products = [product.product for product in user_order_items]
 
     context = {
-            'cat': cat,
-            'current_order_products': current_order_products
-        }
+        'cat': cat,
+        'current_order_products': current_order_products
+    }
 
     return render(request, "customer/items.html", context)
 
 
 class IndexView(generic.ListView):
     template_name = 'customer/index.html'
-    context_object_name = 'cat'
+    context_object_name = 'categories'
 
     def get_queryset(self):
         return Category.objects.all()
 
+
+# def list_categories(request):
+#     cat = Category.objects.all()
+#     return render(request, 'customer/index.html', {'categories': cat})
+#
+#
+# def list_products(request, id):
+#     cat = Category.objects.get(pk=id)
+#     prod = cat.product_set.all()
+#     return render(request, 'customer/items.html', {'products': prod})
 
 def customer_signup(request):
     if request.method == 'POST':
@@ -71,9 +82,9 @@ def customer_signup(request):
         if form.is_valid():
             user = form.save()
             contact_number = form.cleaned_data['contact_number']
-            #CustomerProfile.objects.create(Customer=user, phone_number=contact_number)
-            send_mail('Hello Customer', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
-                      fail_silently=True)
+            # CustomerProfile.objects.create(Customer=user, phone_number=contact_number)
+            # send_mail('Hello Customer', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
+            #           fail_silently=True)
             login(request, user)
             return redirect('customer:home')
     else:
@@ -97,8 +108,5 @@ def customer_login(request):
 
 
 def customer_logout(request):
-    if request.method == 'POST':
-        logout(request)
-        return render(request, 'customer/logout.html')
-    else:
-        return HttpResponse('Cannot hard code logout')
+    logout(request)
+    return render(request, 'customer/logout.html')
