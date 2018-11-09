@@ -2,14 +2,11 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
-from django.core.mail import send_mail
-from django.conf import settings
-from customer.models import CustomerProfile
 from customer.forms import CustomerCreationForm
 from django.views import generic
-from vendor.models import Category, Product
+from vendor.models import Category
 from cart.models import order
-
+from customer.models import CustomerProfile
 
 def home(request):
     return HttpResponse('Dear Customer, welcome to the home page!')
@@ -82,9 +79,10 @@ def customer_signup(request):
         if form.is_valid():
             user = form.save()
             contact_number = form.cleaned_data['contact_number']
-            # CustomerProfile.objects.create(Customer=user, phone_number=contact_number)
+            c = CustomerProfile.objects.get(Customer=user)
             # send_mail('Hello Customer', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
             #           fail_silently=True)
+            c.phone_number = contact_number
             login(request, user)
             return redirect('customer:home')
     else:
