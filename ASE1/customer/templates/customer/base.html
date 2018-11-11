@@ -72,11 +72,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="vegetables">
 							<ul class="dropdown-menu drp-mnu">
                                 {% if user.is_authenticated %}
-                                    <li><a href="{% url 'customer:logout' %}">Logout</a></li>
+                                    <li><a href="{% url 'customer:actor_authentication:logout' %}">Logout</a></li>
                                     <li><a href="{% url 'customer:profile' %}">UserProfile</a></li>
                                 {% else %}
-                                    <li><a href="{% url 'customer:login' %}">Login</a></li>
-                                    <li><a href="{% url 'customer:signup' %}">Sign Up</a></li>
+                                    <li><a href="{% url 'customer:actor_authentication:login_all' %}">Login</a></li>
+                                    <li><a href="{% url 'customer:actor_authentication:signup_all' %}">Sign Up</a></li>
+{#                                    <li><a href="{% url 'vendor:actor_authentication:vendor_signup' %}">Sign Up <small>Vendor</small></a></li>#}
                                 {% endif %}
 							</ul>
 						</div>

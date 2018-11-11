@@ -89,40 +89,42 @@ def delete_product(request, id):
     product.delete()
     return render(request, 'vendor/deleted.html', {'name': name})
 
+###########   EARLIER   ##########################################
+# def vendor_signup(request):
+#     if request.method == 'POST':
+#         form = VendorCreationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             contact_number = form.cleaned_data['contact_number']
+#             # new_vendor = VendorProfile(Vendor=user,phone_number=contact_number)
+#             VendorProfile.objects.create(Vendor=user, phone_number=contact_number)
+#             # send_mail('Hello vendor', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
+#             #           fail_silently=True)
+#             login(request, user)
+#             return redirect('vendor:view_products')
+#     else:
+#         form = VendorCreationForm()
+#     return render(request, 'vendor/signup.html', {'form': form})
+###########   EARLIER   ##########################################
 
-def vendor_signup(request):
-    if request.method == 'POST':
-        form = VendorCreationForm(request.POST)
+###########   EARLIER   ##########################################
+# def vendor_login(request):
+#     if request.method == 'POST':
+#         form = AuthenticationForm(data=request.POST)
+#         if form.is_valid():
+#             user = form.get_user()
+#             login(request, user)
+#             if 'next' in request.POST:
+#                 return redirect(request.POST.get('next'))
+#             else:
+#                 return redirect('vendor:view_products')
+#     else:
+#         form = AuthenticationForm
+#     return render(request, 'vendor/login.html', {'form': form})
+###########   EARLIER   ##########################################
 
-        if form.is_valid():
-            user = form.save()
-            contact_number = form.cleaned_data['contact_number']
-            # new_vendor = VendorProfile(Vendor=user,phone_number=contact_number)
-            VendorProfile.objects.create(Vendor=user, phone_number=contact_number)
-            # send_mail('Hello vendor', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
-            #           fail_silently=True)
-            login(request, user)
-            return redirect('vendor:view_products')
-    else:
-        form = VendorCreationForm()
-    return render(request, 'vendor/signup.html', {'form': form})
-
-
-def vendor_login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            if 'next' in request.POST:
-                return redirect(request.POST.get('next'))
-            else:
-                return redirect('vendor:view_products')
-    else:
-        form = AuthenticationForm
-    return render(request, 'vendor/login.html', {'form': form})
-
-
-def vendor_logout(request):
-    logout(request)
-    return render(request, 'vendor/logout.html')
+###########   EARLIER   ##########################################
+# def vendor_logout(request):
+#     logout(request)
+#     return render(request, 'vendor/logout.html')
+###########   EARLIER   ##########################################
