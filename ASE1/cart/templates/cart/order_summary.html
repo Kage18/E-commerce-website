@@ -1,8 +1,72 @@
 {% extends 'customer/base.html' %}
 
+{#{% block content %}#}
+{#    {% for item in ordre.get_cart_item %}#}
+{#        {{ item.product.prod_name }}--<a href="{% url 'cart:delete_from_cart' item.id %}">remove</a><br>#}
+{##}
+{#    {% endfor %}<br>#}
+{#{% endblock %}#}
 {% block content %}
-    {% for item in ordre.get_cart_item %}
-        {{ item.product.prod_name }}--<a href="{% url 'cart:delete_from_cart' item.id %}">remove</a><br>
+ <section>
+   <div class="row">
+    <table class="table table-hover table-bordered text-center">
+      <tr class="text-center">
+        <th>no.</th>
+        <th>Item</th>
+        <th>Price</th>
+      </tr>
+      {% for item in ordre.get_cart_item %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            {{ item.product.prod_name }}
+            <span class="pull-right">
+              <a href="{% url 'cart:delete_from_cart' item.id %}" data-balloon="remove this item from cart" class="text-danger" onclick="return confirm_delete();">
+              remove
+              </a>
+            </span>
+          </td>
+          <td>{{ item.product.cost }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan= 3> You have not added any items yet.</td>
+        </tr>
+      {% endfor %}
+      <tr>
+        {% if ordre.get_cart_total != None %}
+        <td colspan=2>
+          <strong class="pull-right">Order Total:</strong>
+        </td>
 
-    {% endfor %}<br>
+        <td colspan= 1>
+          ₹<strong>{{ ordre.get_cart_total }}</strong>
+        </td>
+        {% endif %}
+      </tr>
+      <tr>
+        <td colspan=1 >
+          <a href="{% url 'customer:home' %}" class="btn btn-warning pull-left">
+            {% if ordre %}Continue Shopping{% else %}Add Items to Cart {% endif %}
+          </a>
+        </td>
+        <td colspan=2>
+          {% if ordre.get_cart_item %}
+            <a href="{% url 'cart:update' %}" class="pull-right btn btn-primary">Proceed To Checkout</a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+
+   </div>
+
+ </section>
 {% endblock %}
+{% block scripts %}
+  {{ block.super }}
+  <script>
+  function confirm_delete(){
+    return confirm("Do you want to remove this item from cart?");
+  }
+  </script>
+{% endblock scripts %}

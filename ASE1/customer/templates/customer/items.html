@@ -38,12 +38,12 @@
                         <li>Brand: <b>{{ prod.brand }}</b></li>
                     {% endif %}
                     {% if prod in current_order_products %}
-                        <a class="btn btn-warning" href="{% url 'cart:order_summary' %}">Go to Cart</a>
+                        <a class="btn btn-warning cart-add" href="{% url 'cart:order_summary' %}">Go to Cart</a>
                     {% else %}
                         <span id="prod_{{ prod.id }}" add_url="{% url 'cart:add_to_cart' prod.id cat.id%}">
-                            <a class="btn btn-warning cart-add">Add to Cart</a>
-                        </span>
+                                <a class="btn btn-warning cart-add">Add to Cart</a>
                     {% endif %}
+                    </span>
                 </ul>
             </li>
             <br>
