@@ -82,10 +82,9 @@ def customer_signup(request):
         if form.is_valid():
             user = form.save()
             contact_number = form.cleaned_data['contact_number']
-            c = CustomerProfile.objects.get(Customer=user)
+            # c = CustomerProfile.objects.get(Customer=user)
             # send_mail('Hello Customer', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
             #           fail_silently=True)
-            c.phone_number = contact_number
             login(request, user)
             return redirect('customer:home')
     else:

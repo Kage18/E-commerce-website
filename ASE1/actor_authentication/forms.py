@@ -1,16 +1,11 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+class UserLoginForm(forms.Form):
+    username = forms.CharField(label='Username')
+    password = forms.CharField(label='Password',widget=forms.PasswordInput)
 
-# class CustomerCreationForm(UserCreationForm):
-#     contact_number = forms.IntegerField()
-#
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'contact_number']
-
-class CustomerCreationForm(forms.ModelForm):
+class UserCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'placeholder':'Enter Password Here ...'}))
     confirm_password = forms.CharField(widget=forms.PasswordInput(
@@ -33,7 +28,24 @@ class CustomerCreationForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        user = User.objects.get(email=email)
-        if user:
+        if User.objects.filter(email=email):
             raise forms.ValidationError('Email Already Exists')
-        return user
+        return email
+
+
+# class UserEditForm(forms.ModelForm):
+#     username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
+#     email = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
+#     class Meta:
+#         model = User
+#         fields = (
+#             'username',
+#             'first_name',
+#             'last_name',
+#             'email',
+#         )
+#
+# class ProfileEditForm(forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#         exclude = ('user',)
