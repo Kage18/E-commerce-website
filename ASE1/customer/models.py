@@ -12,10 +12,8 @@ class CustomerProfile(models.Model):
     def __str__(self):
         return self.Customer.username
 
-
 def post_save_customerprofile_create(sender, instance, created, *args, **kwargs):
     if created:
         CustomerProfile.objects.get_or_create(Customer=instance)
-
 
 post_save.connect(post_save_customerprofile_create, sender=User)

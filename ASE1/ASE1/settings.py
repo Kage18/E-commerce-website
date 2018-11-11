@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'vendor',
     'customer',
     'cart',
+    'actor_authentication',
+    # 'blog',
 ]
 
 EMAIL_USE_TLS = True
