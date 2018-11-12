@@ -1,4 +1,4 @@
-"""ASE1 URL Configuration
+"""mysite URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -14,18 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path,include,re_path
+from . import views
+
+app_name = 'blog'
 
 urlpatterns = [
-    path('vendor/', include('vendor.urls')),
-    path('customer/', include('customer.urls')),
-    path('cart/', include('cart.urls')),
-    path('blog/', include('blog.urls')),
-    path('admin/', admin.site.urls),
+    path('',views.post_list,name='post_list'),
+    path("<int:id>/edit_post/",views.post_edit,name = 'post_edit'),
+    path("<int:id>/post_delete/",views.post_delete,name = 'post_delete'),
+    path('<int:id>/<slug:slug>/',views.post_detail,name = 'post_detail'),
+    path('post_create/',views.post_create,name='post_create'),
+    path('like/',views.like_post,name = 'like_post'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

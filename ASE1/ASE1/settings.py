@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'customer',
     'cart',
     'actor_authentication',
-    # 'blog',
+    'blog',
 ]
 
 EMAIL_USE_TLS = True
