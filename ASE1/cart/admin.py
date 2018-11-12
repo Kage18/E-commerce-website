@@ -1,4 +1,4 @@
 from django.contrib import admin
-from cart.models import order, orderitem
-# Register your models here.
-admin.site.register((order, orderitem))
+from cart.models import Order, OrderItem, Transaction
+
+admin.site.register((Order, OrderItem, Transaction))

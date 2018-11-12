@@ -1,14 +1,21 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from customer.forms import CustomerCreationForm
 from django.views import generic
 from vendor.models import Category
-from cart.models import order
+from cart.models import Order
 from customer.models import CustomerProfile
-from ASE1.decorators import customer_required
 from django.contrib.auth.decorators import login_required
+
+
+def get_user_order(request):
+    user_profile = get_object_or_404(CustomerProfile, Customer=request.user)
+    ord = Order.objects.filter(owner=user_profile, is_ordered=True)
+    if ord.exists():
+        return ord
+    return 0
 
 
 def home(request):
@@ -37,14 +44,18 @@ def profile(request):
         a.save()
         return redirect('customer:home')
 
-    return render(request, 'customer/profile.html')
+    placed_order = get_user_order(request)
+    context = {
+        'ordre': placed_order
+    }
+    return render(request, 'customer/profile.html', context)
 
 
 def itemsview(request, pk):
     cat = Category.objects.get(id=pk)
     current_order_products = []
     if request.user.is_authenticated:
-        filtered_orders = order.objects.filter(owner=request.user.cus, is_ordered=False)
+        filtered_orders = Order.objects.filter(owner=request.user.cus, is_ordered=False)
         if filtered_orders.exists():
             user_order = filtered_orders[0]
             user_order_items = user_order.items.all()
@@ -66,25 +77,16 @@ class IndexView(generic.ListView):
         return Category.objects.all()
 
 
-# def list_categories(request):
-#     cat = Category.objects.all()
-#     return render(request, 'customer/index.html', {'categories': cat})
-#
-#
-# def list_products(request, id):
-#     cat = Category.objects.get(pk=id)
-#     prod = cat.product_set.all()
-#     return render(request, 'customer/items.html', {'products': prod})
-
 def customer_signup(request):
     if request.method == 'POST':
         form = CustomerCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             contact_number = form.cleaned_data['contact_number']
-            # c = CustomerProfile.objects.get(Customer=user)
+            c = CustomerProfile.objects.get(Customer=user)
             # send_mail('Hello Customer', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
             #           fail_silently=True)
+            c.phone_number = contact_number
             login(request, user)
             return redirect('customer:home')
     else:

@@ -12,9 +12,10 @@ from django.contrib.auth.models import User
 
 class CustomerCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder':'Enter Password Here ...'}))
+        attrs={'placeholder': 'Enter Password Here ...'}))
     confirm_password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder':'Confirm Password ...'}))
+        attrs={'placeholder': 'Confirm Password ...'}))
+
     class Meta:
         model = User
         fields = (

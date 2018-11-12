@@ -1,4 +1,4 @@
-{% extends 'vendor/base.html' %}
+{% extends 'customer/base.html' %}
 
 {% block content %}
     {% if user.is_authenticated %}
@@ -12,5 +12,30 @@
             phone    : <input type="number" value="{{ user.cus.phone_number }}" name="phone"><br>
             <input type="submit" value="Update">
         </form>
+{#        {% for foo in ordre %}#}
+{#        {{ foo }}#}
+{#            {% for o in foo.items.all %}#}
+{#                {{ o }}#}
+{#            {% endfor %}#}
+{##}
+{#        {% endfor %}#}
+        {% if ordre %}
+            <table border="5" class="table table-hover table-bordered text-center">
+            {% for o in ordre %}
+
+                <tr>
+                    <td>{{ o }}</td>
+                    <td>
+                        {% for item in o.items.all %}
+                            {{ item }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        ₹{{ o.get_cart_total }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% endif %}
     {% endif %}
 {% endblock %}
