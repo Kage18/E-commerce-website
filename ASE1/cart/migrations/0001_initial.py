@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='items',
-            field=models.ManyToManyField(to='cart.orderitem'),
+            field=models.ManyToManyField(to='cart.OrderItem'),
         ),
         migrations.AddField(
             model_name='order',

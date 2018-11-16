@@ -5,15 +5,14 @@ from django.contrib.auth import login, logout
 from customer.forms import CustomerCreationForm
 from django.views import generic
 from vendor.models import Category
-from cart.models import order
+from cart.models import Order
 from customer.models import CustomerProfile
-from ASE1.decorators import customer_required
 from django.contrib.auth.decorators import login_required
 
 
 def get_user_order(request):
     user_profile = get_object_or_404(CustomerProfile, Customer=request.user)
-    ord = order.objects.filter(owner=user_profile, is_ordered=True)
+    ord = Order.objects.filter(owner=user_profile, is_ordered=True)
     if ord.exists():
         return ord
     return 0
@@ -56,7 +55,7 @@ def itemsview(request, pk):
     cat = Category.objects.get(id=pk)
     current_order_products = []
     if request.user.is_authenticated:
-        filtered_orders = order.objects.filter(owner=request.user.cus, is_ordered=False)
+        filtered_orders = Order.objects.filter(owner=request.user.cus, is_ordered=False)
         if filtered_orders.exists():
             user_order = filtered_orders[0]
             user_order_items = user_order.items.all()
@@ -70,23 +69,10 @@ def itemsview(request, pk):
     return render(request, "customer/items.html", context)
 
 
-class IndexView(generic.ListView):
-    template_name = 'customer/index.html'
-    context_object_name = 'categories'
+def list_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'customer/index.html', {'categories': categories})
 
-    def get_queryset(self):
-        return Category.objects.all()
-
-
-# def list_categories(request):
-#     cat = Category.objects.all()
-#     return render(request, 'customer/index.html', {'categories': cat})
-#
-#
-# def list_products(request, id):
-#     cat = Category.objects.get(pk=id)
-#     prod = cat.product_set.all()
-#     return render(request, 'customer/items.html', {'products': prod})
 
 def customer_signup(request):
     if request.method == 'POST':

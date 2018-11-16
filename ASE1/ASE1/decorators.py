@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from functools import wraps
 from django.shortcuts import redirect
 
@@ -12,7 +11,7 @@ def customer_required(original_function):
         except Exception as ex:
             if type(ex).__name__ == 'RelatedObjectDoesNotExist':
                 print("Differentiated between a customer and a vendor")
-                return redirect('customer:login')
+                return redirect('customer:actor_authentication:login_all')
 
     return wrapper_function
 
@@ -26,6 +25,6 @@ def vendor_required(original_function):
         except Exception as ex:
             if type(ex).__name__ == 'RelatedObjectDoesNotExist':
                 print("Differentiated between a customer and a vendor")
-                return redirect('vendor:login')
+                return redirect('vendor:actor_authentication:login_all')
 
     return wrapper_function

@@ -1,4 +1,3 @@
-from django.conf import settings
 import random
 import string
 from datetime import date

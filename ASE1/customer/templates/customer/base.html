@@ -56,11 +56,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</form>
 		</div>
 		<div class="product_list_header">
-			<form action="#" method="post" class="last">
+			<form action="{% url 'cart:order_summary' %}" method="post" class="last">
+				{% csrf_token %}
                 <fieldset>
-                    <input type="hidden" name="cmd" value="_cart" />
-                    <input type="hidden" name="display" value="1" />
-{#                    <input type="submit" name="submit" value="View your cart" class="button" />#}
+                    {% if user.is_authenticated %}
+                        <input type="submit" name="submit" value="View your cart" class="button" />
+                    {% endif %}
                 </fieldset>
             </form>
 		</div>
@@ -72,11 +73,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="vegetables">
 							<ul class="dropdown-menu drp-mnu">
                                 {% if user.is_authenticated %}
-                                    <li><a href="{% url 'customer:logout' %}">Logout</a></li>
+                                    <li><a href="{% url 'customer:actor_authentication:logout' %}">Logout</a></li>
                                     <li><a href="{% url 'customer:profile' %}">UserProfile</a></li>
                                 {% else %}
-                                    <li><a href="{% url 'customer:login' %}">Login</a></li>
-                                    <li><a href="{% url 'customer:signup' %}">Sign Up</a></li>
+                                    <li><a href="{% url 'customer:actor_authentication:login_all' %}">Login</a></li>
+                                    <li><a href="{% url 'customer:actor_authentication:signup_all' %}">Sign Up</a></li>
+{#                                    <li><a href="{% url 'vendor:actor_authentication:vendor_signup' %}">Sign Up <small>Vendor</small></a></li>#}
                                 {% endif %}
 							</ul>
 						</div>

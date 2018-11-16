@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'vendor',
     'customer',
     'cart',
+    'actor_authentication',
+    'blog',
 ]
 
 EMAIL_USE_TLS = True
@@ -69,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -118,3 +121,9 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = '183kushal@gmail.com'
+EMAIL_HOST_PASSWORD = '19991803'
+EMAIL_PORT = 587
