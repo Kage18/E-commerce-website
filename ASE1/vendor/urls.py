@@ -1,6 +1,5 @@
-from django.urls import path,include
+from django.urls import path, include
 from vendor import views
-from actor_authentication import views as OurAuthViews
 
 app_name = 'vendor'
 
@@ -11,9 +10,8 @@ urlpatterns = [
     path('add/', views.add_products, name='add_products'),
     path('view/', views.view_products, name='view_products'),
     path('modify/<int:id>/', views.modify_products, name='modify_products'),
+    path('show-orders/', views.view_orders, name='view-orders'),
     path('delete_product/<int:id>', views.delete_product, name='delete_product'),
     path('authentication/', include('actor_authentication.urls')),
-    # path('login/', OurAuthViews.login_all, name='login'),
-    # path('logout/', OurAuthViews.logout_all, name='logout'),
-    # path('signup/', OurAuthViews.vendor_signup, name='signup')
+
 ]

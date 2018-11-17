@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load customer_filters %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% for order in orders %}
+    Customer: <b>{{ order.owner }}</b><br>
+    Order id: <b>{{ order.ref_code }}</b><br>
+    Items:
+    <b>
+    <ul>
+    {% for item in order.items.all %}
+        <li>{{ item }}- ₹{{ item.product.cost }}</li>
+    {% endfor %}
+    </ul>
+    </b>
+    <br>
+{% endfor %}
+
+</body>
+</html>

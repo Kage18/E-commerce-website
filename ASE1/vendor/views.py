@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+
+from cart.models import Order
 from vendor.forms import ProductsAdd
 from vendor.models import Product, Category
 from django.contrib.auth.decorators import login_required
@@ -88,3 +90,10 @@ def delete_product(request, id):
     name = product.prod_name
     product.delete()
     return render(request, 'vendor/deleted.html', {'name': name})
+
+
+@login_required(login_url='vendor:login')
+@vendor_required
+def view_orders(request):
+    orders = Order.objects.filter(is_ordered=True)
+    return render(request, 'vendor/show_orders.html', {'orders': orders})
