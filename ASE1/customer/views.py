@@ -1,10 +1,11 @@
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from customer.forms import CustomerCreationForm
 from django.views import generic
-from vendor.models import Category
+from vendor.models import Category, Product
 from cart.models import Order
 from customer.models import CustomerProfile
 from django.contrib.auth.decorators import login_required
@@ -63,6 +64,29 @@ def itemsview(request, pk):
     }
 
     return render(request, "customer/items.html", context)
+
+def Search_Results(request):
+    products = []
+    current_order_products = []
+    query = request.GET.get('q')
+    # print(query)
+    if query:
+        products = Product.objects.filter(
+            Q(prod_name__icontains=query) |
+            Q(brand__icontains=query) |
+            Q(category__cat_name__contains=query)
+        )
+    if request.user.is_authenticated:
+        filtered_orders = Order.objects.filter(owner=request.user.cus)
+        if filtered_orders.exists():
+            user_order = filtered_orders[0]
+            user_order_items = user_order.items.all()
+            current_order_products = [product.product for product in user_order_items]
+    context = {
+        "products": products,
+        "current_order_products": current_order_products,
+    }
+    return render(request, 'customer/search_results.html', context)
 
 
 def list_categories(request):
