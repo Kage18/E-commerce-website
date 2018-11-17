@@ -4,7 +4,7 @@ from customer import views
 app_name = 'customer'
 
 urlpatterns = [
-    path('home/', views.IndexView.as_view(), name='home'),
+    path('home/', views.list_categories, name='home'),
     path('home/<int:pk>/', views.itemsview, name='items'),
     path('authentication/', include('actor_authentication.urls')),
     # path('login/', OurAuthViews.login_all, name='login'),

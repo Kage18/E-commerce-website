@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 from django.contrib.auth.models import User
 
 
@@ -14,13 +13,12 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     prod_name = models.CharField(max_length=150)
     ingredients = models.TextField(max_length=264, blank=True)
-    qty = models.IntegerField(default=0)
+    stock = models.IntegerField(default=0)
     cost = models.IntegerField(default=0)
     brand = models.CharField(max_length=150, blank=True)
-    prod_pic = models.FileField()
-    # created_at = models.TimeField(default=datetime.now())
-    # updated_at = models.TimeField(default=datetime.now())
-    # photo = models.ImageField(upload_to='documents/', blank=True)
+    prod_pic = models.FileField(upload_to='documents/', blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.prod_name

@@ -8,7 +8,7 @@ class OrderItem(models.Model):
     is_ordered = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
     date_ordered = models.DateTimeField(null=True)
-    qty = models.IntegerField(null=True)
+    qty = models.IntegerField(null=True,default=1)
     ref_code = models.CharField(max_length=20)
 
     def __str__(self):
@@ -26,7 +26,7 @@ class Order(models.Model):
         return self.items.all()
 
     def get_cart_total(self):
-        return sum([item.product.cost for item in self.items.all()])
+        return sum([item.product.cost*item.qty for item in self.items.all()])
 
     def __str__(self):
         return '{0} -- {1}'.format(self.owner, self.ref_code)

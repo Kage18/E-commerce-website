@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from functools import wraps
 from django.shortcuts import redirect
 
