@@ -37,7 +37,7 @@ def list_categories(request):
     return render(request, 'customer/index.html', {'categories': categories})
 
 
-@login_required(login_url='vendor:login')
+@login_required(login_url='vendor:actor_authentication:login_all')
 @vendor_required
 def add_products(request):
     if request.method == 'POST':

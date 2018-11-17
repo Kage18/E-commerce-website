@@ -10,14 +10,12 @@ from cart.models import Order
 from customer.models import CustomerProfile
 from django.contrib.auth.decorators import login_required
 
-
 def get_user_order(request):
     user_profile = get_object_or_404(CustomerProfile, Customer=request.user)
     ord = Order.objects.filter(owner=user_profile, is_ordered=True)
     if ord.exists():
         return ord
     return 0
-
 
 def index(request):
     return render(request, 'customer/base.html')
@@ -46,7 +44,6 @@ def profile(request):
         'ordre': placed_order
     }
     return render(request, 'customer/profile.html', context)
-
 
 def itemsview(request, pk):
     cat = Category.objects.get(id=pk)

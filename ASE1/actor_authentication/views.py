@@ -116,15 +116,20 @@ def vendor_signup(request):
 
 
 def login_all(request):
+    next = ""
+    if request.GET:
+        next = request.GET['next']
+        nextto = request.GET['nextto']
+    print(next)
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            if 'next' in request.POST:
-                return redirect(request.POST.get('next'))
-            else:
+            if next == "":
                 return redirect('customer:home')
+            else:
+                return redirect(next+'?nextto='+nextto)
     else:
         form = AuthenticationForm
     return render(request, 'customer/login.html', {'form': form})

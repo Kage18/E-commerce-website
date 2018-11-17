@@ -8,15 +8,20 @@
 
             $.ajax({
                 url: span.attr("add_url"),
+                {#success: function (response) {#}
+                {#    console.log("finished", response);},#}
+                {#error: function (xhr, textStatus, errorThrown) {#}
+                {#    console.log("error");#}
+                {#    window.location = "{% url 'customer:actor_authentication:login_all' %}"}#}
             });
             {% if user.is_authenticated %}
                 $(this).remove();
                 $(span).append($('<a/>')
-                    .attr('href', "{% url 'cart:order_summary' %}")
+                    .attr('href',"{% url 'cart:order_summary' %}")
                     .addClass("btn btn-warning")
                     .text("Go to Cart"));
             {% else %}
-                window.location.replace('/customer/authentication/login/')
+                window.location.replace('/customer/authentication/login/?next='+span.attr("add_url")+'&nextto='+span.attr("nextto"))
             {% endif %}
         });
 
@@ -37,9 +42,9 @@
                         <li>Brand: <b>{{ prod.brand }}</b></li>
                     {% endif %}
                     {% if prod in current_order_products %}
-                        <a class="btn btn-warning cart-add" href="{% url 'cart:order_summary' %}">Go to Cart</a>
+                        <a class="btn btn-warning cart-add"  href="{% url 'cart:order_summary' %}">Go to Cart</a>
                     {% else %}
-                        <span id="prod_{{ prod.id }}" add_url="{% url 'cart:add_to_cart' prod.id %}">
+                        <span id="prod_{{ prod.id }}" nextto="{% url 'customer:items' cat.id %}" add_url="{% url 'cart:add_to_cart' prod.id %}">
                                 <a class="btn btn-warning cart-add">Add to Cart</a>
                     {% endif %}
                     </span>

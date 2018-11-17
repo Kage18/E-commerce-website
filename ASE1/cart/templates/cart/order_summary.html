@@ -20,7 +20,7 @@
                             <span class="pull-right">
               <a href="{% url 'cart:delete_from_cart' item.id %}" data-balloon="remove this item from cart"
                  class="text-danger" onclick="return confirm_delete();">
-              remove
+                  remove
               </a>
             </span>
                         </td>
@@ -33,7 +33,7 @@
                             </select>
                         </td>
                         <td>₹{{ item.product.cost }}</td>
-                        <td><span id="get_price{{ item.id }}">₹{% multiply item.product.cost item.qty %}</span></td>
+                        <td>₹<span id="get_price{{ item.id }}">{% multiply item.product.cost item.qty %}</span></td>
                     </tr>
                 {% empty %}
                     <tr>
@@ -89,7 +89,7 @@
                 y = parseInt(document.getElementById("{{ item.id }}").value);
                 x = x + {{item.product.cost}}*y;
                 document.getElementById("get_price{{ item.id }}").innerHTML = ({{item.product.cost}}*y);
-
+                {#$(#{{ item.id }}).html({{item.product.cost}}*y);#}
             {% endfor %}
             document.getElementById("total").innerHTML = x;
             var item_id = $this.id;
