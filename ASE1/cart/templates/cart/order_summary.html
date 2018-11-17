@@ -87,8 +87,8 @@
             {% for item in order.get_cart_item %}
 
                 y = parseInt(document.getElementById("{{ item.id }}").value);
-                x = x + {{item.product.cost}} * y;
-                document.getElementById("get_price{{ item.id }}").innerHTML = ({{item.product.cost}} * y);
+                x = x + {{item.product.cost}}*y;
+                document.getElementById("get_price{{ item.id }}").innerHTML = ({{item.product.cost}}*y);
 
             {% endfor %}
             document.getElementById("total").innerHTML = x;
