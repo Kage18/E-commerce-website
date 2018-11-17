@@ -1,15 +1,18 @@
 from django import forms
 from django.contrib.auth.models import User
 
+
 class UserLoginForm(forms.Form):
     username = forms.CharField(label='Username')
-    password = forms.CharField(label='Password',widget=forms.PasswordInput)
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+
 
 class UserCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder':'Enter Password Here ...'}))
+        attrs={'placeholder': 'Enter Password Here ...'}))
     confirm_password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder':'Confirm Password ...'}))
+        attrs={'placeholder': 'Confirm Password ...'}))
+
     class Meta:
         model = User
         fields = (
@@ -31,7 +34,6 @@ class UserCreationForm(forms.ModelForm):
     #     if User.objects.filter(email=email):
     #         raise forms.ValidationError('Email Already Exists')
     #     return email
-
 
 # class UserEditForm(forms.ModelForm):
 #     username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))

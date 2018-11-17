@@ -24,10 +24,6 @@ def add_to_cart(request, prod_id):
 
     user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
 
-    if product in user_order.items.all():
-        messages.info(request, 'Already in Cart')
-        return redirect(reverse('customer:profile'))
-
     if status:
         ref_code = generate_order_id()
         order_item, status = OrderItem.objects.get_or_create(product=product, ref_code=ref_code)
@@ -89,8 +85,24 @@ def update_transaction_records(request):
                               success=True)
 
     transaction.save()
-
-    # send an email to the customer
-    # look at tutorial on how to send emails with sendgrid
     messages.info(request, "Thank you! Your purchase was successful!")
     return redirect(reverse('customer:profile'))
+
+
+def qtyupdate(request):
+    print("hvhkhhlvch")
+    a = request.POST.get('item_id')
+    print(request.method)
+    if request.method == "POST":
+        print("hvhkhhlvch")
+        order_id = request.POST["order_id"]
+        item_id = request.POST["item_id"]
+        qty = request.POST["z"]
+        print("data: " + item_id + "        " + order_id + "           " + qty)
+        order = get_user_pending_order(request)
+        item = order.items.get(pk=item_id)
+        item.qty = qty
+        print("data: " + item_id + "        " + order_id + "           " + qty)
+        item.save()
+        order.save()
+    return HttpResponse(" ")

@@ -1,13 +1,8 @@
-from datetime import datetime
-from django.shortcuts import redirect, get_object_or_404, render
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
-from django.db.models import Q
+from django.shortcuts import redirect, render
+from django.http import HttpResponse
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.template.loader import render_to_string
 from .forms import UserCreationForm
-from customer.models import CustomerProfile
 from vendor.models import VendorProfile
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.sites.shortcuts import get_current_site

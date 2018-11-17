@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'cart',
     'actor_authentication',
     'blog',
+    'mathfilters',
 ]
 
 EMAIL_USE_TLS = True

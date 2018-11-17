@@ -2,6 +2,7 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter
 def get_qty(stock):
     try:
@@ -12,3 +13,8 @@ def get_qty(stock):
         return list(range(stock))
     else:
         return list(range(10))
+
+
+@register.simple_tag()
+def multiply(qty, unit_price, *args, **kwargs):
+    return qty * unit_price
