@@ -18,10 +18,6 @@ def get_user_order(request):
     return 0
 
 
-def home(request):
-    return HttpResponse('Dear Customer, welcome to the home page!')
-
-
 def index(request):
     return render(request, 'customer/base.html')
 

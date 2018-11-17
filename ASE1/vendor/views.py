@@ -10,30 +10,31 @@ from django.core.paginator import Paginator
 from ASE1.decorators import vendor_required
 
 
-def home(request):
-    return HttpResponse('Dear vendor, Welcome to the home page!')
-
-
 def index(request):
     return render(request, 'vendor/base.html')
 
 
-def products_view(request):
-    category = Category
+def itemsview(request, pk):
+    cat = Category.objects.get(id=pk)
+    current_order_products = []
+    if request.user.is_authenticated:
+        filtered_orders = Order.objects.filter(owner=request.user.cus, is_ordered=False)
+        if filtered_orders.exists():
+            user_order = filtered_orders[0]
+            user_order_items = user_order.items.all()
+            current_order_products = [product.product for product in user_order_items]
+
+    context = {
+        'cat': cat,
+        'current_order_products': current_order_products
+    }
+
+    return render(request, "customer/items.html", context)
 
 
-class ItemsView(generic.DetailView):
-    template_name = 'customer/items.html'
-    model = Category
-    context_object_name = 'cat'
-
-
-class IndexView(generic.ListView):
-    template_name = 'customer/index.html'
-    context_object_name = 'cat'
-
-    def get_queryset(self):
-        return Category.objects.all()
+def list_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'customer/index.html', {'categories': categories})
 
 
 @login_required(login_url='vendor:login')
@@ -43,7 +44,7 @@ def add_products(request):
         form = ProductsAdd(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('vendor:view_products')
+            return redirect('vendor:home')
 
     else:
         form = ProductsAdd()

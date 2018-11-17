@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-{% load customer_filters %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'vendor/base.html' %}
+
+{% block content %}
 
 {% for order in orders %}
     Customer: <b>{{ order.owner }}</b><br>
@@ -21,5 +16,4 @@
     <br>
 {% endfor %}
 
-</body>
-</html>
+{% endblock %}
