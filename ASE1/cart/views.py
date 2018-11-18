@@ -8,19 +8,8 @@ from customer.models import CustomerProfile
 from cart.extra import generate_order_id
 import datetime
 from django.core.mail import send_mail
-from functools import wraps
 from django.conf import settings
 from django.template.loader import render_to_string
-
-
-def sample_deco(func):
-    @wraps(func)
-    def wrapper(request, **kwargs):
-        if not request.user.is_authenticated:
-            return HttpResponse('Unauthorized', status=401)
-        return func(request, **kwargs)
-
-    return wrapper
 
 
 def get_user_pending_order(request):
@@ -104,13 +93,18 @@ def update_transaction_records(request):
                               success=True)
 
     transaction.save()
-    # subject = 'Your order successfully place'
-    # message = 'Hi,' + request.user.username + ' Your Order with referenceid [' + order_to_purchase.ref_code + '] has been successfully placed'
-    # # message = render_to_string('actor_authentication/actimail.html')
-    # email_from = settings.EMAIL_HOST_USER
-    # recipient_list = [request.user.email]
-    #
-    # send_mail(subject, message, email_from, recipient_list, fail_silently=False)
+    subject = 'Your order successfully place'
+    context = {
+        'ordre': order_to_purchase,
+        'user': request.user,
+        'total': order_to_purchase.get_cart_total(),
+    }
+    html = render_to_string('cart/message.html', context)
+    message = render_to_string('cart/message.html', context)
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [request.user.email]
+
+    send_mail(subject, message, email_from, recipient_list, fail_silently=False, html_message=html)
     messages.info(request, "Thank you! Your purchase was successful!")
     return redirect(reverse('customer:profile'))
 
