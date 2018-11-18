@@ -1,14 +1,13 @@
 from django.db.models import Q
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from customer.forms import CustomerCreationForm
-from django.views import generic
 from vendor.models import Category, Product
 from cart.models import Order
 from customer.models import CustomerProfile
 from django.contrib.auth.decorators import login_required
+
 
 def get_user_order(request):
     user_profile = get_object_or_404(CustomerProfile, Customer=request.user)
@@ -16,6 +15,7 @@ def get_user_order(request):
     if ord.exists():
         return ord
     return 0
+
 
 def index(request):
     return render(request, 'customer/base.html')
@@ -45,6 +45,7 @@ def profile(request):
     }
     return render(request, 'customer/profile.html', context)
 
+
 def itemsview(request, pk):
     cat = Category.objects.get(id=pk)
     current_order_products = []
@@ -61,6 +62,7 @@ def itemsview(request, pk):
     }
 
     return render(request, "customer/items.html", context)
+
 
 def Search_Results(request):
     products = []

@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-
 from cart.models import Order
 from vendor.forms import ProductsAdd
 from vendor.models import Product, Category
 from django.contrib.auth.decorators import login_required
-from django.views import generic
 from django.core.paginator import Paginator
 from ASE1.decorators import vendor_required
 
@@ -51,7 +48,7 @@ def add_products(request):
     return render(request, 'vendor/add_products.html', {'form': form})
 
 
-@login_required(login_url='vendor:login')
+@login_required(login_url='vendor:actor_authentication:login_all')
 @vendor_required
 def view_products(request):
     product_list = Product.objects.all().order_by('prod_name')
@@ -62,7 +59,7 @@ def view_products(request):
     return render(request, 'vendor/view_products.html', {'products': products})
 
 
-@login_required(login_url='vendor:login')
+@login_required(login_url='vendor:actor_authentication:login_all')
 @vendor_required
 def modify_products(request, id):
     product = Product.objects.get(pk=id)
@@ -84,7 +81,7 @@ def modify_products(request, id):
     return render(request, 'vendor/modify_product.html', {'product': product})
 
 
-@login_required(login_url='vendor:login')
+@login_required(login_url='vendor:actor_authentication:login_all')
 @vendor_required
 def delete_product(request, id):
     product = Product.objects.get(pk=id)
@@ -93,7 +90,7 @@ def delete_product(request, id):
     return render(request, 'vendor/deleted.html', {'name': name})
 
 
-@login_required(login_url='vendor:login')
+@login_required(login_url='vendor:actor_authentication:login_all')
 @vendor_required
 def view_orders(request):
     orders = Order.objects.filter(is_ordered=True)

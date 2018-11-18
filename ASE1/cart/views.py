@@ -11,15 +11,17 @@ from django.core.mail import send_mail
 from functools import wraps
 from django.conf import settings
 from django.template.loader import render_to_string
+
+
 def sample_deco(func):
     @wraps(func)
     def wrapper(request, **kwargs):
-        #print(request.user)
         if not request.user.is_authenticated:
-            print("hi")
             return HttpResponse('Unauthorized', status=401)
         return func(request, **kwargs)
+
     return wrapper
+
 
 def get_user_pending_order(request):
     user_profile = get_object_or_404(CustomerProfile, Customer=request.user)
@@ -29,7 +31,6 @@ def get_user_pending_order(request):
     return 0
 
 
-# @sample_deco
 @login_required(login_url='customer:actor_authentication:login_all')
 def add_to_cart(request, prod_id):
     user_profile = get_object_or_404(CustomerProfile, Customer=request.user)
@@ -51,7 +52,7 @@ def add_to_cart(request, prod_id):
         nextto = request.GET["nextto"]
         return redirect(nextto)
     else:
-        return HttpResponse('dysh')
+        return HttpResponse('')
 
 
 @login_required(login_url='customer:login')
@@ -91,6 +92,10 @@ def update_transaction_records(request):
 
     order_items = order_to_purchase.items.all()
 
+    for item in order_items:
+        item.product.stock -= item.qty
+        item.product.save()
+
     order_items.update(is_ordered=True, date_ordered=datetime.datetime.now())
 
     transaction = Transaction(profile=request.user.cus,
@@ -99,29 +104,23 @@ def update_transaction_records(request):
                               success=True)
 
     transaction.save()
-    print('nxfgnf')
-    print(request.user.email)
-    subject = 'Your order successfully place'
-    message = 'Hi,' + request.user.username +' Your Order with referenceid ['+ order_to_purchase.ref_code + '] has been successfully placed'
-    # message = render_to_string('actor_authentication/actimail.html')
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = [request.user.email]
-
-    send_mail(subject, message, email_from, recipient_list, fail_silently=False)
+    # subject = 'Your order successfully place'
+    # message = 'Hi,' + request.user.username + ' Your Order with referenceid [' + order_to_purchase.ref_code + '] has been successfully placed'
+    # # message = render_to_string('actor_authentication/actimail.html')
+    # email_from = settings.EMAIL_HOST_USER
+    # recipient_list = [request.user.email]
+    #
+    # send_mail(subject, message, email_from, recipient_list, fail_silently=False)
     messages.info(request, "Thank you! Your purchase was successful!")
     return redirect(reverse('customer:profile'))
 
 
 def qtyupdate(request):
-    print("hvhkhhlvch")
     a = request.POST.get('item_id')
-    print(request.method)
     if request.method == "POST":
-        print("hvhkhhlvch")
         order_id = request.POST["order_id"]
         item_id = request.POST["item_id"]
         qty = request.POST["z"]
-        print("data: " + item_id + "        " + order_id + "           " + qty)
         order = get_user_pending_order(request)
         item = order.items.get(pk=item_id)
         item.qty = qty

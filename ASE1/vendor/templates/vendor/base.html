@@ -76,6 +76,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <li><a href="{% url 'customer:actor_authentication:logout' %}">Logout</a></li>
                                     <li><a href="{% url 'customer:profile' %}">UserProfile</a></li>
                                     <li><a href="{% url 'vendor:view_products' %}">View Products</a></li>
+                                    <li><a href="{% url 'vendor:add_products' %}">Add Products</a> </li>
                                     <li><a href="{% url 'vendor:view-orders' %}">Show Orders</a></li>
                                 {% else %}
                                     <li><a href="{% url 'customer:actor_authentication:login_all' %}">Login</a></li>
@@ -88,7 +89,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</ul>
 		</div>
 		<div class="header_right1">
-			<h2><a href="#">Contact Us</a></h2>
+			<h2><a href="{% url 'customer:home' %}">HOME</a></h2>
 		</div>
 		<div class="clearfix"> </div>
 	</div>

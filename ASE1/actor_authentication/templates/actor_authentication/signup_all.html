@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign up</title>
-</head>
-<body>
+{% extends 'customer/base.html' %}
+
+{% block content %}
 <a href="{% url 'customer:actor_authentication:customer_signup' %}" target="_blank">Sign up as a customer</a><br><br>
 <a href="{% url 'vendor:actor_authentication:vendor_signup' %}" target="_blank">Sign up as a vendor</a>
-</body>
-</html>
+
+{% endblock %}

@@ -14,25 +14,6 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
 
-# Create your views here.
-###########   EARLIER   ########################
-# def customer_signup(request):
-#     if request.method == 'POST':
-#         form = CustomerCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             contact_number = form.cleaned_data['contact_number']
-#             c = CustomerProfile.objects.get(Customer=user)
-#             # send_mail('Hello Customer', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
-#             #           fail_silently=True)
-#             c.phone_number = contact_number
-#             login(request, user)
-#             return redirect('customer:home')
-#     else:
-#         form = CustomerCreationForm()
-#     return render(request, 'customer/signup.html', {'form': form})
-###########   EARLIER   ########################
-
 def customer_signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -79,25 +60,6 @@ def activate(request, uidb64, token):
         return HttpResponse('customer:home')
 
 
-###########   EARLIER   ########################
-# def vendor_signup(request):
-#     if request.method == 'POST':
-#         form = VendorCreationForm(request.POST)
-#
-#         if form.is_valid():
-#             user = form.save()
-#             contact_number = form.cleaned_data['contact_number']
-#             # new_vendor = VendorProfile(Vendor=user,phone_number=contact_number)
-#             VendorProfile.objects.create(Vendor=user, phone_number=contact_number)
-#             # send_mail('Hello vendor', 'Thanks for registering', settings.EMAIL_HOST_USER, [user.email],
-#             #           fail_silently=True)
-#             login(request, user)
-#             return redirect('vendor:view_products')
-#     else:
-#         form = VendorCreationForm()
-#     return render(request, 'vendor/signup.html', {'form': form})
-###########   EARLIER   ########################
-
 def vendor_signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -119,7 +81,7 @@ def login_all(request):
     next = ""
     if request.GET:
         next = request.GET['next']
-        nextto = request.GET['nextto']
+
     print(next)
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -129,7 +91,13 @@ def login_all(request):
             if next == "":
                 return redirect('customer:home')
             else:
-                return redirect(next+'?nextto='+nextto)
+                if 'nextto' in request.GET:
+                    nextto = request.GET['nextto']
+                    return redirect(next + '?nextto=' + nextto)
+                else:
+                    return redirect(next)
+
+
     else:
         form = AuthenticationForm
     return render(request, 'customer/login.html', {'form': form})
