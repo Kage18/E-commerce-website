@@ -9,7 +9,7 @@
         <h3>{{ post.title }}</h3>
         <small> Post created by: {{ post.author }}</small>
         <br>
-        <p>{{ post.body }}</p>
+        <p>{{ post.body | safe}}</p>
     </div>
     <div id="like_section">
     {% if request.user.is_authenticated %}

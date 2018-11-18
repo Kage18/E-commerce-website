@@ -4,6 +4,7 @@ from django.shortcuts import reverse
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.text import slugify
+from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -19,7 +20,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     slugthing = models.SlugField(max_length=200)
     author = models.ForeignKey(User,related_name="blog_posts",on_delete=models.CASCADE)
-    body = models.TextField()
+    body = RichTextUploadingField()
     likes = models.ManyToManyField(User,related_name='likes',blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
