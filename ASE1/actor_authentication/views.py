@@ -12,16 +12,24 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
-
+from customer.forms import Contact_Form
+from customer.models import CustomerProfile
 
 def customer_signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid():
+        ContactForm = Contact_Form(request.POST)
+        if form.is_valid() and ContactForm.is_valid():
+            PhNo = ContactForm.cleaned_data.get('phone_number')
             user = form.save(commit=False)
             user.set_password(form.cleaned_data.get('password'))
             user.is_active = False
             user.save()
+            Customer_Prof = CustomerProfile.objects.get_or_create(Customer=user)[0]
+            # Customer_Prof = user.customerprofile
+            # print(Customer_Prof)
+            Customer_Prof.phone_number = PhNo
+            Customer_Prof.save()
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
             message = render_to_string('actor_authentication/actimail.html', {
@@ -38,8 +46,10 @@ def customer_signup(request):
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = UserCreationForm()
+        ContactForm = Contact_Form()
     context = {
         'form': form,
+        'ContactForm':ContactForm,
     }
     return render(request, 'customer/signup.html', context)
 
