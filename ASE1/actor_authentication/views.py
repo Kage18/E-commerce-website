@@ -15,6 +15,7 @@ from django.core.mail import EmailMessage
 from customer.forms import Contact_Form
 from customer.models import CustomerProfile
 
+
 def customer_signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -49,7 +50,7 @@ def customer_signup(request):
         ContactForm = Contact_Form()
     context = {
         'form': form,
-        'ContactForm':ContactForm,
+        'ContactForm': ContactForm,
     }
     return render(request, 'customer/signup.html', context)
 
@@ -63,9 +64,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        # login(request, user)
-        # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return redirect('customer:actor_authentication:login_all')
     else:
         return HttpResponse('customer:home')
 
