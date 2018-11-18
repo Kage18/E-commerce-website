@@ -93,7 +93,7 @@ def update_transaction_records(request):
                               success=True)
 
     transaction.save()
-    subject = 'Your order successfully place'
+    subject = 'Your order has been successfully placed'
     context = {
         'ordre': order_to_purchase,
         'user': request.user,

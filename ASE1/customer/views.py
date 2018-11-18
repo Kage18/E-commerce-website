@@ -127,3 +127,7 @@ def customer_login(request):
 def customer_logout(request):
     logout(request)
     return render(request, 'customer/logout.html')
+
+
+def forgot_pass(request):
+    return render(request, 'registration/password_reset_form.html')
