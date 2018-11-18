@@ -27,12 +27,17 @@
 
 {% block content %}
     <div>
+    <ol>
         {% for prod in products %}
-            <ol>
+
                 <li>
                     Name:<b>{{ prod.prod_name }}</b>
                     <ul>
-                        <img src="{{ prod.prod_pic.url }}" width="200" height="200">
+                        {% if prod.prod_pic %}
+                            <img src="{{ prod.prod_pic.url }}" width="200" height="200">
+                        {% else %}
+                            <img src = "{% static 'customer/images' %}">
+                        {% endif %}
                         <li>Category: <b>{{ prod.category.cat_name }}</b></li>
                         <li>Quantity: <b>{{ prod.id }}</b></li>
                         <li>Price: <b>{{ prod.cost }}</b></li>
@@ -49,9 +54,10 @@
                     </ul>
                 </li>
                 <br>
-            </ol>
+
         {% empty %}
             <p>we dont have products named "{{ request.GET.q }}"</p>
         {% endfor %}
+        </ol>
     </div>
 {% endblock %}
