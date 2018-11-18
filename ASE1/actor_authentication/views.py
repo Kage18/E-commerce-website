@@ -22,14 +22,14 @@ def customer_signup(request):
         ContactForm = Contact_Form(request.POST)
         if form.is_valid() and ContactForm.is_valid():
             PhNo = ContactForm.cleaned_data.get('phone_number')
+            addr = ContactForm.cleaned_data.get('address')
             user = form.save(commit=False)
             user.set_password(form.cleaned_data.get('password'))
             user.is_active = False
             user.save()
             Customer_Prof = CustomerProfile.objects.get_or_create(Customer=user)[0]
-            # Customer_Prof = user.customerprofile
-            # print(Customer_Prof)
             Customer_Prof.phone_number = PhNo
+            Customer_Prof.address = addr
             Customer_Prof.save()
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'

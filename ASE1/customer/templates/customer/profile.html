@@ -5,11 +5,13 @@
         <form method="post">
             {% csrf_token %}
 
-            Username : <input type="text" value="{{ user.username }}" name="username"><br>
-            Firstname: <input type="text" value="{{ user.first_name }}" name="first_name"><br>
-            Lastname : <input type="text" value="{{ user.last_name }}" name="last_name"><br>
-            Email    : <input type="email" value="{{ user.email }}" name="email"><br>
-            phone    : <input type="number" value="{{ user.cus.phone_number }}" name="phone"><br>
+{#            Username : <input type="text" value="{{ user.username }}" name="username"><br>#}
+{#            Firstname: <input type="text" value="{{ user.first_name }}" name="first_name"><br>#}
+{#            Lastname : <input type="text" value="{{ user.last_name }}" name="last_name"><br>#}
+{#            Email    : <input type="email" value="{{ user.email }}" name="email"><br>#}
+{#            phone    : <input type="number" value="{{ user.cus.phone_number }}" name="phone"><br>#}
+            {{ form.as_p }}
+            {{ ContactForm.as_p }}
             <input type="submit" value="Update">
         </form>
 {#        {% for foo in ordre %}#}
@@ -22,7 +24,14 @@
         {% if ordre %}
             <table border="5" class="table table-hover table-bordered text-center">
             {% for o in ordre %}
+            <thead class="thead-dark">
+                <tr class="text-center">
+                    <th>Order_Id</th>
+                    <th>Items</th>
+                    <th>Total</th>
 
+                </tr>
+                </thead>
                 <tr>
                     <td>{{ o }}</td>
                     <td>

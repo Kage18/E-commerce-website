@@ -4,25 +4,27 @@
     <section>
         <div class="row">
             <table class="table table-hover table-bordered text-center">
+                <thead class="thead-dark">
                 <tr class="text-center">
                     <th>S.No</th>
                     <th>Item</th>
                     <th>Quantity</th>
                     <th>Price/per</th>
                     <th></th>
-                    <
+
                 </tr>
+                </thead>
                 {% for item in order.get_cart_item %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>
-                            {{ item.product.prod_name }}
+                            <strong>{{ item.product.prod_name }}
                             <span class="pull-right">
               <a href="{% url 'cart:delete_from_cart' item.id %}" data-balloon="remove this item from cart"
                  class="text-danger" onclick="return confirm_delete();">
-                  remove
+                  <button type="button" class="btn btn-outline-danger btn-sm">Remove</button>
               </a>
-            </span>
+                            </span></strong>
                         </td>
                         <td>
                             <select id="{{ item.id }}" onchange="mult(this)">
@@ -32,8 +34,8 @@
                                 {% endfor %}
                             </select>
                         </td>
-                        <td>₹{{ item.product.cost }}</td>
-                        <td>₹<span id="get_price{{ item.id }}">{% multiply item.product.cost item.qty %}</span></td>
+                        <td><strong>₹{{ item.product.cost }}</strong></td>
+                        <td><strong>₹<span id="get_price{{ item.id }}">{% multiply item.product.cost item.qty %}</span></strong></td>
                     </tr>
                 {% empty %}
                     <tr>

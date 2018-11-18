@@ -1,4 +1,5 @@
-{% extends 'customer/base.html' %}
+{% extends 'vendor/base.html' %}
+{% load static %}
 
 {% block content %}
     {% if products %}
@@ -10,9 +11,11 @@
         <li>
         Name: <a href="{% url 'vendor:modify_products'  item.id %}" target="_blank"><b>{{ item.prod_name }}</b></a>
         <ul>
-        <img src="{{ item.prod_pic.url }}" width="200" height="200">
+        {% if item.prod_pic %}
+            <img src="{{ item.prod_pic.url }}" width="200" height="200">
+        {% endif %}
         <li>Category: <b>{{ item.category.cat_name }}</b></li>
-        <li>Quantity: <b>{{ item.qty }}</b></li>
+        <li>Stock: <b>{{ item.stock }}</b></li>
         <li>Price: <b>{{ item.cost }}</b></li>
         {% if item.brand|length > 0 %}
             <li>Brand: <b>{{ item.brand }}</b></li>

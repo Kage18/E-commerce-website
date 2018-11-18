@@ -41,7 +41,7 @@ def add_products(request):
         form = ProductsAdd(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('vendor:home')
+            return redirect('vendor:view_products')
 
     else:
         form = ProductsAdd()
@@ -64,21 +64,13 @@ def view_products(request):
 def modify_products(request, id):
     product = Product.objects.get(pk=id)
     if request.method == 'POST':
-        name = request.POST['prod_name']
-        cat = request.POST['prod_cat']
-        brand = request.POST['prod_brand']
-        qty = request.POST['prod_qty']
-        cost = request.POST['prod_cost']
-
-        product.prod_name = name
-        product.qty = qty
-        product.cost = cost
-        product.category.cat_name = cat
-        product.brand = brand
-        product.save()
-        return redirect('vendor:view_products')
-
-    return render(request, 'vendor/modify_product.html', {'product': product})
+        form = ProductsAdd(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('vendor:view_products')
+    else:
+        form = ProductsAdd(instance=product)
+    return render(request, 'vendor/modify_product.html', {'form': form})
 
 
 @login_required(login_url='vendor:actor_authentication:login_all')

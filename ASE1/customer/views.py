@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
-from customer.forms import CustomerCreationForm
+from customer.forms import CustomerCreationForm, Contact_Form, UpdateProfile
 from vendor.models import Category, Product
 from cart.models import Order
 from customer.models import CustomerProfile
@@ -23,27 +23,33 @@ def index(request):
 
 def profile(request):
     a = request.user
+    print(a)
+    customer = CustomerProfile.objects.get(Customer=a)
     if request.method == 'POST':
-        username = request.POST['username']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        phone = request.POST['phone']
+        form = UpdateProfile(request.POST, instance=a)
+        ContactForm = Contact_Form(request.POST, instance=customer)
+        if form.is_valid() and ContactForm.is_valid():
+            PhNo = ContactForm.cleaned_data.get('phone_number')
+            addr = ContactForm.cleaned_data.get('address')
+            user = form.save(commit=False)
+            user.save()
 
-        a.username = username
-        a.first_name = first_name
-        a.last_name = last_name
-        a.email = email
-        a.cus.phone_number = phone
-        a.cus.save()
-        a.save()
-        return redirect('customer:home')
 
-    placed_order = get_user_order(request)
-    context = {
-        'ordre': placed_order
-    }
-    return render(request, 'customer/profile.html', context)
+            customer.phone_number = PhNo
+            customer.address = addr
+            customer.save()
+            return redirect('customer:home')
+    else:
+        form = UpdateProfile(instance=request.user)
+        ContactForm = Contact_Form(instance = customer)
+        placed_order = get_user_order(request)
+        context = {
+            'form': form,
+            'ContactForm': ContactForm,
+            'ordre': placed_order
+        }
+        return render(request, 'customer/profile.html', context)
+
 
 
 def itemsview(request, pk):
