@@ -1,3 +1,4 @@
+
 {% extends 'blog/base.html' %}
 {% block title %}
     Welcome to {{ post.title }}
@@ -11,9 +12,13 @@
         <p>{{ post.body }}</p>
     </div>
     <div id="like_section">
+    {% if request.user.is_authenticated %}
         {% include 'blog/like_section.html' %}
+    {% else %}
+        <P>{{ total_likes }} likes</P>
+    {% endif %}
     </div>
-    <P>{{ total_likes }} likes</P>
+
     {% if post.author == request.user %}
     <div class="section-1" style="float: right">
         <a href="{% url 'blog:post_edit' post.id %}">
@@ -40,21 +45,32 @@
         {% for comment in comments %}
         <blockquote class="blockquote">
             <p class="mb-0">{{ comment.content }}</p>
-            <footer class="blockquote-footer">By<cite title="Source Title"> {{ comment.user|capfirst }}</cite></footer>
+{#            <footer class="blockquote-footer">By<cite title="Source Title"> {{ comment.user|capfirst }}</cite></footer>#}
+            <footer class="blockquote-footer">by <cite title="Source Title">{{ comment.user|capfirst }}</cite>
+                    <button type="button" name="button" style="margin-left:50px;"class="reply-btn btn-small waves-effect purple darken-3">Reply</button>
+            </footer>
         </blockquote>
-{# REPLY SECTION AHEAD #}
-        <div class="replied-comments container mt-2">
+{# REPLY SECTION AHEAD#}
+
+        <div class="replied-comment container mt-2" style="display:none">
+            {% for reply in comment.replies.all %}
+                    <blockquote class="blockquote">
+                        <p class="mb-0">{{ reply.content }}</p>
+                        <footer class="blockquote-footer">by <cite title="Source Title">{{ reply.user|capfirst }}</cite>
+                        </footer>
+                    </blockquote>
+            {% endfor %}
             <div class="form-group row">
                 {% if request.user.is_authenticated %}
-                    <form method="post">
+                    <form method="post" class="reply-form">
                         {% csrf_token %}
-                        <input type="submit" class="btn btn-outlined-info reply-starter" name="comment_id" value="{{ comment.id }}">Want to Reply</input>
                         {{ comment_form.as_p }}
                         <input type="submit" class="btn btn-outlined-success" value="REPLY">
                     </form>
                 {% endif %}
             </div>
         </div>
+
         {% endfor %}
     </div>
 {% endblock %}

@@ -58,7 +58,7 @@ def post_create(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            print(type(request.POST))
+            return redirect('blog:post_list')
     else:
         form = PostCreationForm()
     context = {

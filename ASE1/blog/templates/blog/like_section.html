@@ -1,5 +1,4 @@
-
-{% if request.user.is_authenticated %}
+  <P>{{ total_likes }} likes</P>
     <form action="{% url 'blog:like_post' %}" method="post">
         {% csrf_token %}
         {% if is_liked %}
@@ -8,4 +7,3 @@
     <button type="submit" id="like" name="post_id" value="{{ post.id }}" class="btn btn-primary">Like</button>
         {% endif %}
     </form>
-{% endif %}
