@@ -19,4 +19,4 @@ def gen_category_wise(category):
             name = row[0]
             quantity = int(row[1])
             price = float(row[2])
-            c.product_set.create(prod_name=name, qty=quantity, cost=price)
+            c.product_set.create(prod_name=name, stock=quantity, cost=price)
