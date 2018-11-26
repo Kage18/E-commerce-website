@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from cart.models import Order
 from vendor.forms import ProductsAdd
@@ -52,7 +53,14 @@ def add_products(request):
 @vendor_required
 def view_products(request):
     product_list = Product.objects.all().order_by('prod_name')
-
+    current_order_products = []
+    query = request.GET.get('q')
+    if query:
+        product_list = Product.objects.filter(
+            Q(prod_name__icontains=query) |
+            Q(brand__icontains=query) |
+            Q(category__cat_name__contains=query)
+        )
     paginator = Paginator(product_list, 10)
     page = request.GET.get('page')
     products = paginator.get_page(page)
@@ -87,3 +95,27 @@ def delete_product(request, id):
 def view_orders(request):
     orders = Order.objects.filter(is_ordered=True)
     return render(request, 'vendor/show_orders.html', {'orders': orders})
+
+
+def Search_Results(request):
+    products = []
+    current_order_products = []
+    query = request.GET.get('q')
+    # print(query)
+    if query:
+        products = Product.objects.filter(
+            Q(prod_name__icontains=query) |
+            Q(brand__icontains=query) |
+            Q(category__cat_name__contains=query)
+        )
+    if request.user.is_authenticated:
+        filtered_orders = Order.objects.filter(owner=request.user.cus)
+        if filtered_orders.exists():
+            user_order = filtered_orders[0]
+            user_order_items = user_order.items.all()
+            current_order_products = [product.product for product in user_order_items]
+    context = {
+        "products": products,
+        "current_order_products": current_order_products,
+    }
+    return render(request, 'customer/search_results.html', context)

@@ -72,18 +72,27 @@ def activate(request, uidb64, token):
 def vendor_signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid():
+        ContactForm = Contact_Form(request.POST)
+        if form.is_valid() and ContactForm.is_valid():
+            PhNo = ContactForm.cleaned_data.get('phone_number')
+            addr = ContactForm.cleaned_data.get('address')
             user = form.save(commit=False)
             user.set_password(form.cleaned_data.get('password'))
             user.save()
             VendorProfile.objects.create(Vendor=user)
+            Customer_Prof = CustomerProfile.objects.get_or_create(Customer=user)[0]
+            Customer_Prof.phone_number = PhNo
+            Customer_Prof.address = addr
+            Customer_Prof.save()
             return redirect('vendor:actor_authentication:login_all')
     else:
         form = UserCreationForm()
+        ContactForm = Contact_Form()
     context = {
         'form': form,
+        'ContactForm': ContactForm
     }
-    return render(request, 'vendor/signup.html', context)
+    return render(request, 'customer/signup.html', context)
 
 
 def login_all(request):

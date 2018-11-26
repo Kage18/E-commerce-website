@@ -34,14 +34,13 @@ def profile(request):
             user = form.save(commit=False)
             user.save()
 
-
             customer.phone_number = PhNo
             customer.address = addr
             customer.save()
             return redirect('customer:home')
     else:
         form = UpdateProfile(instance=request.user)
-        ContactForm = Contact_Form(instance = customer)
+        ContactForm = Contact_Form(instance=customer)
         placed_order = get_user_order(request)
         context = {
             'form': form,
@@ -49,7 +48,6 @@ def profile(request):
             'ordre': placed_order
         }
         return render(request, 'customer/profile.html', context)
-
 
 
 def itemsview(request, pk):
