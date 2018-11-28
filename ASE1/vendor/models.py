@@ -11,7 +11,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    prod_name = models.CharField(max_length=150)
+    prod_name = models.CharField(max_length=150, unique=True)
     ingredients = models.TextField(max_length=264, blank=True)
     stock = models.IntegerField(default=0)
     cost = models.IntegerField(default=0)

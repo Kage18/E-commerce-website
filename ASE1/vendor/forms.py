@@ -9,6 +9,13 @@ class ProductsAdd(forms.ModelForm):
         model = Product
         fields = '__all__'
 
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #
+    #     count = Product.objects.filter(prod_name=product['prod_name'])
+    #     if count > 0:
+    #         raise forms.ValidationError('The product already exists')
+
 
 def email_check(user):
     return user.is_vendor
