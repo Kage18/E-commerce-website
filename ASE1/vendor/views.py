@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from cart.models import Order
 from vendor.forms import ProductsAdd
-from vendor.models import Product, Category
+from vendor.models import Product, Category, VendorQty
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from ASE1.decorators import vendor_required
@@ -41,6 +41,9 @@ def add_products(request):
     if request.method == 'POST':
         form = ProductsAdd(request.POST, request.FILES)
         if form.is_valid():
+            profile = VendorQty.objects.get_or_create(Vendor=request.user)[0]
+            profile.qty = form.cleaned_data['qty']
+            profile.save()
             form.save()
             return redirect('vendor:view_products')
 

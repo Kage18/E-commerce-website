@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 
 class ProductsAdd(forms.ModelForm):
+    qty = forms.IntegerField()
+
     class Meta:
         model = Product
         fields = '__all__'

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserCreationForm
-from vendor.models import VendorProfile
+from vendor.models import VendorProfile, VendorQty
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -80,6 +80,7 @@ def vendor_signup(request):
             user.set_password(form.cleaned_data.get('password'))
             user.save()
             VendorProfile.objects.create(Vendor=user)
+            VendorQty.objects.create(Vendor=user)
             Customer_Prof = CustomerProfile.objects.get_or_create(Customer=user)[0]
             Customer_Prof.phone_number = PhNo
             Customer_Prof.address = addr

@@ -30,3 +30,12 @@ class VendorProfile(models.Model):
 
     def __str__(self):
         return self.Vendor.username
+
+
+class VendorQty(models.Model):
+    Vendor = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    qty = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.Vendor.username
