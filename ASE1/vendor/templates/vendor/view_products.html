@@ -15,7 +15,7 @@
             <img src="{{ item.prod_pic.url }}" width="200" height="200">
         {% endif %}
         <li>Category: <b>{{ item.category.cat_name }}</b></li>
-        <li>Stock: <b>{{ item.stock }}</b></li>
+        <li>Stock: <b>{{item.get_qty}}</b></li>
         <li>Price: <b>{{ item.cost }}</b></li>
         {% if item.brand|length > 0 %}
             <li>Brand: <b>{{ item.brand }}</b></li>

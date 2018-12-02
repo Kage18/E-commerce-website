@@ -19,23 +19,32 @@ class Product(models.Model):
     prod_pic = models.FileField(upload_to='documents/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    # qty = models.ManyToManyField(VendorQty)
 
     def __str__(self):
         return self.prod_name
 
+    def get_qty(self):
+        # p = VendorQty.objects.get(Vendor=request.user,product=self)
+        # print(p)
+        print('12')
+        return self.stock
 
-class VendorProfile(models.Model):
-    Vendor = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.IntegerField(null=True)
+
+class VendorQty(models.Model):
+    Vendor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    qty = models.IntegerField(default=0)
 
     def __str__(self):
         return self.Vendor.username
 
 
-class VendorQty(models.Model):
-    Vendor = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
-    qty = models.IntegerField(default=0)
+
+
+class VendorProfile(models.Model):
+    Vendor = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.IntegerField(null=True)
 
     def __str__(self):
         return self.Vendor.username

@@ -41,10 +41,10 @@ def add_products(request):
     if request.method == 'POST':
         form = ProductsAdd(request.POST, request.FILES)
         if form.is_valid():
-            profile = VendorQty.objects.get_or_create(Vendor=request.user)[0]
-            profile.qty = form.cleaned_data['qty']
+            a = form.save()
+            profile = VendorQty.objects.get_or_create(Vendor=request.user, product=a)[0]
+            profile.qty = form.cleaned_data['quantity']
             profile.save()
-            form.save()
             return redirect('vendor:view_products')
 
     else:
@@ -78,9 +78,18 @@ def modify_products(request, id):
         form = ProductsAdd(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
+            profile = VendorQty.objects.get_or_create(Vendor=request.user, product=product)[0]
+            profile.qty = form.cleaned_data['quantity']
+            profile.save()
+            # product.qty.add(profile)
             return redirect('vendor:view_products')
     else:
-        form = ProductsAdd(instance=product)
+        q = VendorQty.objects.get(Vendor=request.user, product=product)
+
+        data = {
+            'quantity': q.qty
+        }
+        form = ProductsAdd(instance=product, initial=data)
     return render(request, 'vendor/modify_product.html', {'form': form})
 
 

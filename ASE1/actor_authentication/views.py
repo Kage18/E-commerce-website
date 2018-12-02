@@ -80,7 +80,6 @@ def vendor_signup(request):
             user.set_password(form.cleaned_data.get('password'))
             user.save()
             VendorProfile.objects.create(Vendor=user)
-            VendorQty.objects.create(Vendor=user)
             Customer_Prof = CustomerProfile.objects.get_or_create(Customer=user)[0]
             Customer_Prof.phone_number = PhNo
             Customer_Prof.address = addr
