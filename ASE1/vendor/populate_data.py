@@ -11,7 +11,7 @@ def populate_categories():
 
 def gen_category_wise(category):
     c = Category.objects.get(cat_name=category)
-    filename = 'vendor/static/vendor/items.csv'
+    filename = 'vendor/static/vendor/Fruits.csv'
     with open(filename, 'r') as csvfile:
         csvreader = csv.reader(csvfile)
         fields = next(csvreader)

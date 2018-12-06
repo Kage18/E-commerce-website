@@ -8,7 +8,7 @@ class OrderItem(models.Model):
     is_ordered = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
     date_ordered = models.DateTimeField(null=True)
-    qty = models.IntegerField(null=True,default=1)
+    qty = models.IntegerField(null=True, default=1)
     ref_code = models.CharField(max_length=20)
 
     def __str__(self):
@@ -26,7 +26,7 @@ class Order(models.Model):
         return self.items.all()
 
     def get_cart_total(self):
-        return sum([item.product.cost*item.qty for item in self.items.all()])
+        return sum([item.product.cost * item.qty for item in self.items.all()])
 
     def __str__(self):
         return '{0} -- {1}'.format(self.owner, self.ref_code)
@@ -35,7 +35,7 @@ class Order(models.Model):
 class Transaction(models.Model):
     profile = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
     order_id = models.CharField(max_length=120)
-    amount = models.DecimalField(max_digits=100, decimal_places=2)
+    amount = models.DecimalField(max_digits=3, decimal_places=2)
     success = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
