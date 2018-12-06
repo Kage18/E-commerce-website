@@ -30,3 +30,11 @@ class VendorProfile(models.Model):
 
     def __str__(self):
         return self.Vendor.username
+
+class review(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    content = models.TextField(max_length=1000)
+    rating =  models.IntegerField(null=True)
+    date = models.DateTimeField(auto_now_add=True, null=True)

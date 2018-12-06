@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from customer.forms import CustomerCreationForm, Contact_Form, UpdateProfile
-from vendor.models import Category, Product
+from vendor.models import Category, Product,review
+from vendor.forms import writereview
 from cart.models import Order
 from customer.models import CustomerProfile
 from django.contrib.auth.decorators import login_required
@@ -135,3 +136,38 @@ def customer_logout(request):
 
 def forgot_pass(request):
     return render(request, 'registration/password_reset_form.html')
+
+
+def itemdetailview(request,pk,ck):
+    cat = Category.objects.get(id=pk)
+    prod = Product.objects.get(id=ck)
+    products = Product.objects.filter(category=cat)
+    current_order_products = []
+    if request.user.is_authenticated:
+        filtered_orders = Order.objects.filter(owner=request.user.cus, is_ordered=False)
+        if filtered_orders.exists():
+            user_order = filtered_orders[0]
+            user_order_items = user_order.items.all()
+            current_order_products = [product.product for product in user_order_items]
+    context = {
+        'cat': cat,
+        'prod': prod,
+        'current_order_products': current_order_products,
+    }
+    return render(request, "customer/itemdetail.html", context)
+
+@login_required(login_url="http://127.0.0.1:8000/customer/authentication/login/")
+def reviewtext(request,categ,product):
+    prod = get_object_or_404(Product,pk=product)
+    cat = get_object_or_404(Category,pk=categ)
+    if request.method == 'POST':
+        form = writereview(request.POST)
+        if form.is_valid():
+                content = request.POST.get('content')
+                rating  = request.POST.get('rating')
+                comment1 = review.objects.create(category=cat,product = prod,customer = request.user,content = content,rating=rating)
+                comment1.save()
+                return redirect('/customer/home/'+str(categ)+'/'+str(product)+'/')
+    else:
+        form = writereview()
+    return render(request, 'customer/writereview.html', {'form': form})
