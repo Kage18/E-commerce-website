@@ -1,5 +1,5 @@
 from django import forms
-from vendor.models import Product
+from vendor.models import Product, review
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -27,3 +27,13 @@ class VendorCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'contact_number']
+
+
+class writereview(forms.ModelForm):
+    content = forms.CharField(label="", widget=forms.Textarea(
+        attrs={'class': 'form-control', 'placeholder': 'Write about product', 'rows': '4', 'cols': '50'}))
+    rating = forms.IntegerField()
+
+    class Meta:
+        model = review
+        fields = ['content', 'rating']
