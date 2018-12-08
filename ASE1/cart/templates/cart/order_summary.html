@@ -28,8 +28,8 @@
                         </td>
                         <td>
                             <select id="{{ item.id }}" onchange="mult(this)">
-                                <option value="{{ item.qty }}" selected>{{ item.qty }}</option>
-                                {% for i in item.product.stock|get_qty %}
+                                <option value="{{ item.qty }}" selected>{{ item.qty }}</option
+                                {% for i in item|get_qty_number %}
                                     <option value={{ i|add:1 }}>{{ i|add:1 }}</option>
                                 {% endfor %}
                             </select>

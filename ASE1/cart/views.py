@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from cart.models import OrderItem, Order, Transaction
-from vendor.models import Product
+from vendor.models import Product, VendorQty
 from customer.models import CustomerProfile
 from cart.extra import generate_order_id
 import datetime
@@ -22,6 +22,14 @@ def get_user_pending_order(request):
 
 @login_required(login_url='customer:actor_authentication:login_all')
 def add_to_cart(request, prod_id):
+    if request.GET:
+        vendorid = request.GET['vendorid']
+        print(vendorid)
+        ven_qty = VendorQty.objects.get(id=vendorid)
+        ven = ven_qty.Vendor
+        print(ven)
+        print(ven_qty)
+
     user_profile = get_object_or_404(CustomerProfile, Customer=request.user)
     product = Product.objects.get(id=prod_id)
 
@@ -29,14 +37,20 @@ def add_to_cart(request, prod_id):
 
     if status:
         ref_code = generate_order_id()
+
         order_item, status = OrderItem.objects.get_or_create(product=product, ref_code=ref_code)
+        order_item.vendor.add(ven)
         user_order.items.add(order_item)
+        user_order.vendor.add(ven)
         user_order.ref_code = ref_code
         user_order.save()
     else:
         order_item, status = OrderItem.objects.get_or_create(product=product, ref_code=user_order.ref_code)
+        order_item.vendor.add(ven)
         user_order.items.add(order_item)
+        user_order.vendor.add(ven)
         user_order.save()
+
     if request.GET:
         nextto = request.GET["nextto"]
         return redirect(nextto)
@@ -55,6 +69,7 @@ def delete_from_cart(request, item_id):
 @login_required(login_url='customer:login')
 def order_details(request, **kwargs):
     existing_order = get_user_pending_order(request)
+
     context = {
         'order': existing_order
     }
@@ -82,8 +97,12 @@ def update_transaction_records(request):
     order_items = order_to_purchase.items.all()
 
     for item in order_items:
-        item.product.stock -= item.qty
-        item.product.save()
+        ven = item.vendor.all()[0]
+        ven_qty = VendorQty.objects.get(Vendor=ven, product=item.product)
+        print(ven_qty.qty)
+        ven_qty.qty -= item.qty
+        print(ven_qty.qty)
+        ven_qty.save()
 
     order_items.update(is_ordered=True, date_ordered=datetime.datetime.now())
 

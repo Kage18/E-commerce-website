@@ -1,4 +1,5 @@
 from django import template
+from vendor.models import VendorQty
 
 register = template.Library()
 
@@ -13,6 +14,14 @@ def get_qty(stock):
         return list(range(stock))
     else:
         return list(range(10))
+
+
+@register.filter
+def get_qty_number(item):
+    ven = item.vendor.all()[0]
+    ven_qty = VendorQty.objects.get(Vendor=ven, product=item.product)
+    arr = get_qty(ven_qty.qty)
+    return arr
 
 
 @register.simple_tag()

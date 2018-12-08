@@ -1,14 +1,16 @@
 from django.db import models
-from vendor.models import Product
+from vendor.models import Product, VendorProfile
 from customer.models import CustomerProfile
+from django.contrib.auth.models import User
 
 
 class OrderItem(models.Model):
+    vendor = models.ManyToManyField(User)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     is_ordered = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
     date_ordered = models.DateTimeField(null=True)
-    qty = models.IntegerField(null=True,default=1)
+    qty = models.IntegerField(null=True, default=1)
     ref_code = models.CharField(max_length=20)
 
     def __str__(self):
@@ -16,6 +18,7 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
+    vendor = models.ManyToManyField(User)
     owner = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True, related_name='o')
     ref_code = models.CharField(max_length=20)
     items = models.ManyToManyField(OrderItem)
@@ -26,7 +29,7 @@ class Order(models.Model):
         return self.items.all()
 
     def get_cart_total(self):
-        return sum([item.product.cost*item.qty for item in self.items.all()])
+        return sum([item.product.cost * item.qty for item in self.items.all()])
 
     def __str__(self):
         return '{0} -- {1}'.format(self.owner, self.ref_code)
