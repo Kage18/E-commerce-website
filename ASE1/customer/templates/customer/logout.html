@@ -1,0 +1,9 @@
+{% extends 'customer/base.html' %}
+{% block content %}
+
+<h2>Dear Customer, You have been successfully logged out</h2><br>
+<a href="{% url 'customer:actor_authentication:login_all' %}">Click here to log back in</a><br>
+<a href="{% url 'customer:actor_authentication:signup_all' %}">Click here to Sign up</a><br>
+<a href="{% url 'customer:home' %}">Click here to go to the home page</a>
+
+{% endblock %}

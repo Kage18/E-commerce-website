@@ -1,0 +1,254 @@
+{% extends 'customer/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="banner">
+		<div class="banner_nav_left">
+			<nav class="navbar nav_bottom">
+			 <!-- Brand and toggle get grouped for better mobile display -->
+			  <div class="navbar-header nav_2">
+				  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+			  </div>
+			   <!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<ul class="nav navbar-nav nav_1">
+
+                        {% for cat in categories %}
+                            <li><a href={% url 'customer:items' cat.id %}> <h3>{{ cat.cat_name }}</h3></a></li>
+                        {% endfor %}
+					</ul>
+				 </div><!-- /.navbar-collapse -->
+			</nav>
+		</div>
+		<div class="banner_nav_right">
+			<section class="slider">
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<div class="banner_nav_right_banner">
+							</div>
+						</li>
+						<li>
+							<div class="banner_nav_right_banner1">
+							</div>
+						</li>
+						<li>
+							<div class="banner_nav_right_banner2">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<!-- flexSlider -->
+				<link rel="stylesheet" href="{% static 'customer/css/flexslider.css' %}" type="text/css" media="screen" property="" />
+				<script defer src="{% static 'customer/js/jquery.flexslider.js' %}"></script>
+				<script type="text/javascript">
+				$(window).load(function(){
+				  $('.flexslider').flexslider({
+					animation: "slide",
+					start: function(slider){
+					  $('body').removeClass('loading');
+					}
+				  });
+				});
+			  </script>
+			<!-- //flexSlider -->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+    <!-- top-brands -->
+	<div class="top-brands">
+		<div class="container">
+			<h3>Hot Offers</h3>
+			<div class="top_brands_grids">
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="top_brand_left_grid">
+							<div class="tag"><img src="{% static 'customer/images/tag.png' %}" alt=" " class="img-responsive" /></div>
+							<div class="top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="#"><img title=" " alt=" " src="{% static 'customer/images/1.png' %}" /></a>
+											<p>fortune sunflower oil</p>
+											<h4>$7.99 <span>$10.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="Fortune Sunflower Oil" />
+													<input type="hidden" name="amount" value="7.99" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+
+											</form>
+
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="top_brand_left_grid">
+							<div class="top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="#"><img title=" " alt=" " src="{% static 'customer/images/3.png' %}" /></a>
+											<p>basmati rise (5 Kg)</p>
+											<h4>$11.99 <span>$15.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="basmati rise" />
+													<input type="hidden" name="amount" value="11.99" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="top_brand_left_grid">
+							<div class="top_brand_left_grid_pos">
+								<img src="{% static 'customer/images/offer.png' %}" alt=" " class="img-responsive" />
+							</div>
+							<div class="top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="#"><img src="{% static 'customer/images/2.png' %}" alt=" " class="img-responsive" /></a>
+											<p>Pepsi soft drink (2 Ltr)</p>
+											<h4>$8.00 <span>$10.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="Pepsi soft drink" />
+													<input type="hidden" name="amount" value="8.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="top_brand_left_grid">
+							<div class="top_brand_left_grid_pos">
+								<img src="{% static 'customer/images/offer.png' %}" alt=" " class="img-responsive" />
+							</div>
+							<div class="top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="#"><img src="{% static 'customer/images/4.png' %}" alt=" " class="img-responsive" /></a>
+											<p>dogs food (4 Kg)</p>
+											<h4>$9.00 <span>$11.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="dogs food" />
+													<input type="hidden" name="amount" value="9.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+<!-- //top-brands -->
+<!-- fresh-vegetables -->
+	<div class="fresh-vegetables">
+		<div class="container" >
+			<h3>Top Products</h3>
+			<div class="fresh_vegetables_grids" style="margin-left: 200px;">
+				<div class="col-md-9 fresh_vegetables_grid_right">
+					<div class="col-md-4 fresh_vegetables_grid">
+						<div class="fresh_vegetables_grid1">
+							<img src="{% static 'customer/images/8.jpg' %}" alt=" " class="img-responsive" />
+						</div>
+					</div>
+					<div class="col-md-4 fresh_vegetables_grid">
+						<div class="fresh_vegetables_grid1">
+							<div class="fresh_vegetables_grid1_rel">
+								<img src="{% static 'customer/images/7.jpg' %}" alt=" " class="img-responsive" />
+							</div>
+						</div>
+						<div class="fresh_vegetables_grid1_bottom">
+							<img src="{% static 'customer/images/10.jpg' %}" alt=" " class="img-responsive" />
+						</div>
+					</div>
+					<div class="col-md-4 fresh_vegetables_grid">
+						<div class="fresh_vegetables_grid1">
+							<img src="{% static 'customer/images/9.jpg' %}" alt=" " class="img-responsive" />
+						</div>
+						<div class="fresh_vegetables_grid1_bottom">
+							<img src="{% static 'customer/images/11.jpg' %}" alt=" " class="img-responsive" />
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+<!-- //fresh-vegetables -->
+
+{% endblock %}

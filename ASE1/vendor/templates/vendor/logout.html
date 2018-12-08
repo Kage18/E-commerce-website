@@ -1,0 +1,12 @@
+{% extends 'vendor/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logged out</title>
+</head>
+<body>
+<h2>You have been successfully logged out</h2>
+<a href="{% url 'customer:actor_authentication:login' %}">Click here to log back in</a>
+</body>
+</html>

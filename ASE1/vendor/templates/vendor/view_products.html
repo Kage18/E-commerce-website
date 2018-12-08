@@ -1,0 +1,53 @@
+{% extends 'vendor/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if products %}
+        {% if user.is_authenticated %}
+        <h2><a href="{% url 'vendor:add_products' %}">Click here to add products</a></h2>
+        {% endif %}
+        <ol>
+        {% for item in products %}
+        <li>
+        Name: <a href="{% url 'vendor:modify_products'  item.id %}" target="_blank"><b>{{ item.prod_name }}</b></a>
+        <ul>
+        {% if item.prod_pic %}
+            <img src="{{ item.prod_pic.url }}" width="200" height="200">
+        {% endif %}
+        <li>Category: <b>{{ item.category.cat_name }}</b></li>
+        <li>Stock: <b>{{item.get_qty}}</b></li>
+        <li>Price: <b>{{ item.cost }}</b></li>
+        {% if item.brand|length > 0 %}
+            <li>Brand: <b>{{ item.brand }}</b></li>
+        {% endif %}
+        <li><a href="{% url 'vendor:delete_product' item.id %}">Click here to delete this product</a></li>
+        </ul>
+        </li>
+        <br>
+        {% endfor %}
+        </ol>
+    {% else %}
+        <h2>No products to show</h2>
+    {% endif %}
+
+    <!-- Pagenation begins here -->
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if products.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ products.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ products.number }} of {{ products.paginator.num_pages }}.
+        </span>
+
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}">next</a>
+            <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

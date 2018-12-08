@@ -1,0 +1,24 @@
+{% extends 'vendor/base.html' %}
+
+{% block content %}
+
+<ol>
+{% for order in orders %}
+    <li>
+    Customer name: <b>{{ order.owner }}</b><br>
+    Customer address: <b>{{ order.owner.address }}</b><br>
+    Customer phone number: <b>{{ order.owner.phone_number }}</b><br>
+    Order id: <b>{{ order.ref_code }}</b><br>
+    Items:
+    <b>
+    <ul>
+    {% for item in order.items.all %}
+        <li>{{ item.product }}- ₹{{ item.product.cost }}</li>
+    {% endfor %}
+    </ul>
+    </b>
+    <br>
+    </li>
+{% endfor %}
+</ol>
+{% endblock %}

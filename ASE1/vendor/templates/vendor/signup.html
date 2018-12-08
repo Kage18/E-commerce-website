@@ -1,0 +1,35 @@
+{% extends 'customer/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="login">
+			<h3>Create a new account!</h3>
+			<div class="login_module">
+				<div class="module form-module">
+				  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+				  </div>
+				   <div class="form">
+					<h2>Create an account</h2>
+					<form method="post">
+					    {% csrf_token %}
+					    {% for field in form %}
+					      <p>
+					        {{ field.label_tag }}<br>
+					        {{ field }}
+					        {% if field.help_text %}
+					            <small style="color: grey">{{ field.help_text }}</small>
+					        {% endif %}
+					        {% for error in field.errors %}
+					          <p style="color: red">{{ error }}</p>
+					        {% endfor %}
+					      </p>
+					    {% endfor %}
+                        <br><br>
+					    <input type="submit" value="Sign Up">
+					</form>
+				  </div>
+				</div>
+			</div>
+		</div>
+{% endblock %}
