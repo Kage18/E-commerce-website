@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from ASE1.decorators import vendor_required
 
-
 def index(request):
     return render(request, 'vendor/base.html')
 
@@ -84,7 +83,7 @@ def modify_products(request, id):
             # product.qty.add(profile)
             return redirect('vendor:view_products')
     else:
-        q = VendorQty.objects.get(Vendor=request.user, product=product)
+        q = VendorQty.objects.get_or_create(Vendor=request.user, product=product)[0]
 
         data = {
             'quantity': q.qty
@@ -131,3 +130,4 @@ def Search_Results(request):
         "current_order_products": current_order_products,
     }
     return render(request, 'customer/search_results.html', context)
+

@@ -31,10 +31,8 @@
 
 {% block content %}
     <ol>
-    {% for prod in cat.product_set.all %}
-            <li>
-
-                <a href={% url 'customer:specificitem' cat.id prod.id %}> <b>{{ prod.prod_name }}</b></a>
+        <li>
+                Name: <b>{{ prod.prod_name }}</b>
                 <ul>
                     {% if prod.prod_pic %}
                         <img src="{{ prod.prod_pic.url }}" width="200" height="200">
@@ -52,9 +50,23 @@
                                 <a class="btn btn-warning cart-add">Add to Cart</a>
                     {% endif %}
                     </span>
+
                 </ul>
             </li>
             <br>
-        {% endfor %}
+
+{#            <div class="col-lg-8">#}
+                Reviews:
+                <a name="review">
+                  {% for review in prod.review_set.all %}
+                    <p>{{ review.content }}</p>
+                    <p>{{ review.rating }}</p>
+                    <footer class = "blockquote-footer">by <cite>{{ review.customer }}</cite></footer>
+                  {% endfor %}
+                  </a>
+{#                </div>#}
+             <span ><a href="{% url 'customer:review'  cat.id prod.id  %}" >Click here to add a review</a></span>
+
+
     </ol>
 {% endblock %}

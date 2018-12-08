@@ -12,5 +12,4 @@ urlpatterns = [
     path('show-orders/', views.view_orders, name='view-orders'),
     path('delete_product/<int:id>', views.delete_product, name='delete_product'),
     path('authentication/', include('actor_authentication.urls')),
-
 ]
