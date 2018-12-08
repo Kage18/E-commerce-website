@@ -84,7 +84,7 @@ def modify_products(request, id):
             # product.qty.add(profile)
             return redirect('vendor:view_products')
     else:
-        q = VendorQty.objects.get(Vendor=request.user, product=product)
+        q = VendorQty.objects.get_or_create(Vendor=request.user, product=product)[0]
 
         data = {
             'quantity': q.qty

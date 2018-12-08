@@ -31,7 +31,7 @@
         {% for prod in products %}
 
                 <li>
-                    Name:<b>{{ prod.prod_name }}</b>
+                    <a href={% url 'customer:specificitem' prod.category.id prod.id %}> <b>{{ prod.prod_name }}</b></a>
                     <ul>
                         {% if prod.prod_pic %}
                             <img src="{{ prod.prod_pic.url }}" width="200" height="200">

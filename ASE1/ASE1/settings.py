@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'cart',
     'actor_authentication',
     'blog',
+    'RestFramework',
+    'rest_framework',
     'mathfilters',
     'ckeditor',
     'ckeditor_uploader',
