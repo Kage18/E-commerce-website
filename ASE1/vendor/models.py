@@ -11,7 +11,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    prod_name = models.CharField(max_length=150)
+    prod_name = models.CharField(max_length=150, unique=True)
     ingredients = models.TextField(max_length=264, blank=True)
     stock = models.IntegerField(default=0)
     cost = models.IntegerField(default=0)
@@ -48,3 +48,11 @@ class VendorProfile(models.Model):
 
     def __str__(self):
         return self.Vendor.username
+
+class review(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    content = models.TextField(max_length=1000)
+    rating =  models.IntegerField(null=True)
+    date = models.DateTimeField(auto_now_add=True, null=True)
