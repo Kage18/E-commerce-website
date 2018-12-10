@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'ckeditor',
     'ckeditor_uploader',
+    'qr_code',
 ]
 
 CKEDITOR_UPLOAD_PATH = "ckeditor_uploads/"
@@ -135,3 +136,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = '183kushal@gmail.com'
 EMAIL_HOST_PASSWORD = '19991803'
 EMAIL_PORT = 587
+
+LOGIN_URL = "customer:actor_authentication:login_all"

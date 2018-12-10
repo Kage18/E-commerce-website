@@ -17,5 +17,5 @@ urlpatterns = [
     path('password_reset_done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('password_reset_confirm/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('password_reset_complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
-
+    path('QrCode/<int:id>/',views.QrCode,name="QrCode"),
 ]

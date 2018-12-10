@@ -21,6 +21,13 @@ def get_user_order(request):
 def index(request):
     return render(request, 'customer/base.html')
 
+def QrCode(request,id):
+    This_Order = get_object_or_404(Order,id=id)
+    string = This_Order.get_qr_code()
+    context = {
+        "string":string,
+    }
+    return render(request,"customer/QrCode.html",context)
 
 def profile(request):
     a = request.user

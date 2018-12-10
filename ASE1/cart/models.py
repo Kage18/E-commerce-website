@@ -31,6 +31,19 @@ class Order(models.Model):
     def get_cart_total(self):
         return sum([item.product.cost * item.qty for item in self.items.all()])
 
+    def get_qr_code(self):
+        string = ""
+        string += "Order Id :  " + str(self) + "\n"
+        string += "For Mr/Mrs " + str(self.owner) + "\n"
+        string += "Date Ordered :  " + str(self.date_ordered) + "\n\n"
+        string += "Item : Quantity\n"
+        for item in OrderItem.objects.filter(order=self):
+            string += str(item.product.prod_name) + " : " + str(item.qty)+ "\n"
+        string += "Total is  :  ₹" + str(self.get_cart_total()) + "\n"
+        string += "\nThank You"
+        # print(string)
+        return string
+
     def __str__(self):
         return '{0} -- {1}'.format(self.owner, self.ref_code)
 
