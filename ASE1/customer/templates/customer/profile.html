@@ -2,6 +2,13 @@
 
 {% block content %}
     {% if user.is_authenticated %}
+        <div class="login">
+        <div class="login_module">
+				<div class="module form-module">
+				  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+				  </div>
+				   <div class="form">
+					<h2>Update Account</h2>
         <form method="post">
             {% csrf_token %}
 
@@ -14,6 +21,8 @@
             {{ ContactForm.as_p }}
             <input type="submit" value="Update">
         </form>
+                   </div></div></div>
+        </div>
 {#        {% for foo in ordre %}#}
 {#        {{ foo }}#}
 {#            {% for o in foo.items.all %}#}

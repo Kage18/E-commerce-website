@@ -37,7 +37,7 @@ def add_to_cart(request, prod_id):
 
     if status:
         ref_code = generate_order_id()
-
+        print(ref_code)
         order_item, status = OrderItem.objects.get_or_create(product=product, ref_code=ref_code)
         order_item.vendor.add(ven)
         user_order.items.add(order_item)
