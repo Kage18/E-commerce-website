@@ -35,8 +35,7 @@ class VendorCreationForm(UserCreationForm):
 class writereview(forms.ModelForm):
     content = forms.CharField(label="", widget=forms.Textarea(
         attrs={'class': 'form-control', 'placeholder': 'Write about product', 'rows': '4', 'cols': '50'}))
-    rating = forms.IntegerField()
 
     class Meta:
         model = review
-        fields = ['content', 'rating']
+        fields = ['content']
