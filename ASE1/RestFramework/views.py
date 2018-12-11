@@ -10,7 +10,7 @@ from rest_framework import status
 
 
 class ProductsList(APIView):
-    def get_object(self, pk):
+    def get_object(self):
         try:
             return Product.objects.get(pk=pk)
         except Product.DoesNotExist:
@@ -45,11 +45,24 @@ class ProductsList(APIView):
 class ProductDetail(APIView):
     def get_products(self, pk):
         try:
-            return Product.objects.filter(category=Category.objects.get(pk=pk))
+            return Product.objects.get(pk=pk)
         except Category.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         products = self.get_products(pk)
-        serializer = ProductSerializer(products, many=True)
+        serializer = ProductSerializer(products)
         return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        product = self.get_products(pk)
+        serializer = ProductSerializer(product, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        product = self.get_products(pk)
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
