@@ -44,7 +44,7 @@ def pre_save_slug(sender,**kwargs):
 class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    content = models.TextField(max_length=200)
+    content = RichTextUploadingField()
     reply = models.ForeignKey('self',null=True,on_delete=models.CASCADE,related_name='replies')
     timestamp = models.DateTimeField(auto_now_add=True)
 

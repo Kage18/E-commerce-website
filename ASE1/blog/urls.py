@@ -26,4 +26,6 @@ urlpatterns = [
     path('<int:id>/<slug:slug>/',views.post_detail,name = 'post_detail'),
     path('post_create/',views.post_create,name='post_create'),
     path('like/',views.like_post,name = 'like_post'),
+    path('my_posts/',views.user_posts,name="my_posts"),
+    path('my_drafts/',views.user_drafts,name="my_drafts"),
 ]
