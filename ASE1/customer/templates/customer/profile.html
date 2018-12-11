@@ -1,5 +1,5 @@
 {% extends 'customer/base.html' %}
-
+{% load qr_code %}
 {% block content %}
     {% if user.is_authenticated %}
         <div class="login">
@@ -38,7 +38,7 @@
                     <th>Order_Id</th>
                     <th>Items</th>
                     <th>Total</th>
-
+                    <th>QR Code</th>
                 </tr>
                 </thead>
                 <tr>
@@ -50,6 +50,11 @@
                     </td>
                     <td>
                         ₹{{ o.get_cart_total }}
+                    </td>
+                    <td>
+                        <div>
+                            <a href="{% url 'customer:QrCode' o.id %}" download="{{ o }}">Download QrCode</a>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

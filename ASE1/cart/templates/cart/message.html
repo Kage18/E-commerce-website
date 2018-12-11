@@ -8,7 +8,6 @@ Hi {{ user.username }}
                         <td>   ₹{{ item.product.cost }}    </td>
 
                     </tr>
-
     {% endfor %}
 <tr>
     <td colspan="2">Total</td>
@@ -16,6 +15,6 @@ Hi {{ user.username }}
 </tr>
 </table>
     <br>
-
+    <a href="http://127.0.0.1:8000/customer/QrCode/{{ ordre.id }}/" download="{{ ordre }}">Download QrCode</a><br>
     <a href="http://127.0.0.1:8000/customer/home"><button>Continue shopping</button></a>
 {% endautoescape %}

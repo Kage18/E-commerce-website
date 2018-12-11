@@ -25,6 +25,32 @@ def post_list(request):
     }
     return render(request,'blog/post_list.html',context)
 
+@login_required
+def user_posts(request):
+    user = None
+    try:
+        user = User.objects.get(username=request.user.username)
+    except:
+        return HttpResponse("No user with this id")
+    posts = Post.objects.filter(author=user,status__exact="published")
+    context = {
+        'posts':posts,
+    }
+    return render(request,"blog/my_posts.html",context)
+
+@login_required
+def user_drafts(request):
+    user = None
+    try:
+        user = User.objects.get(username=request.user.username)
+    except:
+        return HttpResponse("No user with this id")
+    posts = Post.objects.filter(author=user,status__exact="draft")
+    context = {
+        'posts':posts,
+    }
+    return render(request,"blog/my_drafts.html",context)
+
 def post_detail(request, id, slug):
     post=get_object_or_404(Post,id=id,slugthing=slug)
     comments = Comment.objects.filter(post=post).order_by('-id')
