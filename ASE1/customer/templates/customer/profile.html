@@ -32,7 +32,6 @@
 {#        {% endfor %}#}
         {% if ordre %}
             <table border="5" class="table table-hover table-bordered text-center">
-            {% for o in ordre %}
             <thead class="thead-dark">
                 <tr class="text-center">
                     <th>Order_Id</th>
@@ -41,6 +40,7 @@
                     <th>QR Code</th>
                 </tr>
                 </thead>
+            {% for o in ordre %}
                 <tr>
                     <td>{{ o }}</td>
                     <td>
@@ -58,7 +58,7 @@
                     </td>
                 </tr>
             {% endfor %}
-            </table>
+            </table><br>
         {% endif %}
     {% endif %}
 {% endblock %}

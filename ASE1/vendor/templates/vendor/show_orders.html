@@ -4,30 +4,58 @@
 
 <ol>
 {% if user.is_authenticated %}
+    <table border="5" class="table table-hover table-bordered text-center">
+    <thead class="thead-dark">
+    <tr class="text-center">
+        <th>Customer name: <br></th>
+        <th> Customer address: <br></th>
+        <th>Customer phone number: <br></th>
+        <th>Order id: <br></th>
+        <th></th>
+    </tr>
+    </thead>
 {% for order in orders %}
-    <li>
-    Customer name: <b>{{ order.owner }}</b><br>
-    Customer address: <b>{{ order.owner.address }}</b><br>
-    Customer phone number: <b>{{ order.owner.phone_number }}</b><br>
-    Order id: <b>{{ order.ref_code }}</b><br>
-    Items:
-    <b>
-    <ul>
-    {% for item in order.items.all %}
-        {% for vendor in item.vendor.all %}
-            {% if user == vendor %}
-                <li>{{ item.product }}</li>
-                <li>{% multiply item.product.cost item.qty %}</li>
-                <li>Quantity{{ item.qty }}</li>
-            {% endif %}
-        {% endfor %}
 
+
+    <tr class="text-center">
+        <th><b>{{ order.owner }}</b><br></th>
+        <th><b>{{ order.owner.address }}</b><br></th>
+        <th><b>{{ order.owner.phone_number }}</b><br></th>
+        <th><b>{{ order.ref_code }}</b><br></th>
+<th>
+    <b>
+    <table border="5" class="table table-hover table-bordered text-center">
+    <thead class="thead-dark"><tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+
+    </tr></thead>
+    {% for item in order.items.all %}
+
+        {% for vendor in item.vendor.all %}
+
+            {% if user == vendor %}
+                <tr>
+                    <th>{{ item.product }}</th>
+                    <th>{{ item.qty }}</th>
+                    <th>{% multiply item.product.cost item.qty %}</th>
+
+                </tr>
+                <tr><th colspan="2">Total</th></tr>
+            {% endif %}
+
+        {% endfor %}
     {% endfor %}
-    </ul>
+    </table>
     </b>
+</th>
     <br>
-    </li>
+
+    <br>
+    </tr>
 {% endfor %}
+    </table>
 </ol>
 {% endif %}
 {% endblock %}
