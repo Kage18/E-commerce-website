@@ -156,19 +156,18 @@
 {% block content %}
     {% if products %}
         {% if user.is_authenticated %}
-            <h2><a href="{% url 'vendor:add_products' %}">Click here to add products</a></h2>
+            <h2><a href="{% url 'vendor:add_products' %}"><button type="button" class="btn btn-primary active">Add Product</button>
+</a></h2>
+        <br>
         {% endif %}
         <div class="container">
-
-
             <div class="row">
                 {% for item in products %}
                     <div class="col-md-4 col-sm-6">
-
                         <div class="product-grid6">
 
-                            Name: <a href="{% url 'vendor:modify_products'  item.id %}"
-                                     target="_blank"><b>{{ item.prod_name }}</b></a>
+                            <a href="{% url 'vendor:modify_products'  item.id %}"
+                                     target="_blank" style="color:black"><span style="font-size:20px"><b>{{ item.prod_name }}</b></span></a>
                             <ul>
                                 {% if item.prod_pic %}
                                     <div class="product-image6"> <img src="{{ item.prod_pic.url }}" ></div>
@@ -179,8 +178,8 @@
                                 {% if item.brand|length > 0 %}
                                     <li>Brand: <b>{{ item.brand }}</b></li>
                                 {% endif %}
-                                <li><a href="{% url 'vendor:delete_product' item.id %}">Click here to delete this
-                                    product</a>
+                                <li><a href="{% url 'vendor:delete_product' item.id %}"><button type="button" class="btn btn-warning">Delete</button>
+                                </a>
                                 </li>
                             </ul>
                             <br>
