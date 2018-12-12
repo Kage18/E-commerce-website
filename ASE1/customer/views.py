@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from customer.forms import CustomerCreationForm, Contact_Form, UpdateProfile
-from vendor.models import Category, Product, review, VendorProfile, VendorQty
+from vendor.models import Category, Product, Review, VendorProfile, VendorQty
 from vendor.forms import writereview
 from cart.models import Order
 from customer.models import CustomerProfile
@@ -177,7 +177,7 @@ def reviewtext(request, categ, product):
             p = 0
             content = request.POST.get('content')
             rating = request.POST.get('rating')
-            k = review.objects.all()
+            k = Review.objects.all()
             for i in k:
                 if i.customer == request.user and i.category == cat and i.product == prod:
                     i.rating = rating
@@ -185,7 +185,7 @@ def reviewtext(request, categ, product):
                     p = 1
                     i.save()
             if p == 0:
-                review1 = review.objects.create(category=cat, product=prod, customer=request.user, content=content,
+                review1 = Review.objects.create(category=cat, product=prod, customer=request.user, content=content,
                                                 rating=rating)
                 review1.save()
             return redirect('/customer/home/' + str(categ) + '/' + str(product) + '/')

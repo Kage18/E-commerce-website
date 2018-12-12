@@ -1,9 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Category(models.Model):
     cat_name = models.CharField(max_length=150)
+
+    def get_absolute_url(self):
+        return reverse('vendor:home')
 
     def __str__(self):
         return self.cat_name
@@ -21,6 +25,9 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # qty = models.ManyToManyField(VendorQty)
+
+    def get_absolute_url(self):
+        return reverse('vendor:items', args=[str(self.id)])
 
     def __str__(self):
         return self.prod_name
@@ -49,10 +56,13 @@ class VendorProfile(models.Model):
         return self.Vendor.username
 
 
-class review(models.Model):
+class Review(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
     customer = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     content = models.TextField(max_length=1000)
     rating = models.IntegerField(null=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.content

@@ -105,7 +105,7 @@ def delete_product(request, id):
 @login_required(login_url='vendor:actor_authentication:login_all')
 @vendor_required
 def view_orders(request):
-    orders = Order.objects.filter(is_ordered=True)
+    orders = Order.objects.filter(is_ordered=True, vendor=request.user)
     return render(request, 'vendor/show_orders.html', {'orders': orders})
 
 

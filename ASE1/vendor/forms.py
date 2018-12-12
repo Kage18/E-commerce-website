@@ -1,5 +1,5 @@
 from django import forms
-from vendor.models import Product, review
+from vendor.models import Product, Review
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -37,5 +37,5 @@ class writereview(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'Write about product', 'rows': '4', 'cols': '50'}))
 
     class Meta:
-        model = review
+        model = Review
         fields = ['content']

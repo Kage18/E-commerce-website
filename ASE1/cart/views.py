@@ -58,7 +58,7 @@ def add_to_cart(request, prod_id):
         return HttpResponse('')
 
 
-@login_required(login_url='customer:login')
+@login_required(login_url='customer:actor_authentication:login_all')
 def delete_from_cart(request, item_id):
     item_to_delete = OrderItem.objects.filter(pk=item_id)
     if item_to_delete.exists():
@@ -66,7 +66,7 @@ def delete_from_cart(request, item_id):
     return redirect(reverse('cart:order_summary'))
 
 
-@login_required(login_url='customer:login')
+@login_required(login_url='customer:actor_authentication:login_all')
 def order_details(request, **kwargs):
     existing_order = get_user_pending_order(request)
 
@@ -76,7 +76,7 @@ def order_details(request, **kwargs):
     return render(request, 'cart/order_summary.html', context)
 
 
-@login_required(login_url='customer:login')
+@login_required(login_url='customer:actor_authentication:login_all')
 def checkout(request, **kwargs):
     existing_order = get_user_pending_order(request)
     context = {
@@ -86,7 +86,7 @@ def checkout(request, **kwargs):
     return render(request, 'cart/checkout.html', context)
 
 
-@login_required()
+@login_required(login_url='customer:actor_authentication:login_all')
 def update_transaction_records(request):
     order_to_purchase = get_user_pending_order(request)
 
