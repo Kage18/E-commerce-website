@@ -101,7 +101,18 @@ def Search_Results(request):
 
 def list_categories(request):
     categories = Category.objects.all()
-    return render(request, 'customer/index.html', {'categories': categories})
+    is_vendor = False
+    if request.user.is_authenticated:
+        try:
+            vendor = request.user.vendorprofile
+            is_vendor = True
+        except:
+            pass
+    context = {
+        "is_vendor":is_vendor,
+        'categories': categories,
+    }
+    return render(request, 'customer/index.html',context)
 
 
 def customer_signup(request):

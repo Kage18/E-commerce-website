@@ -1,3 +1,31 @@
+{#{% extends 'blog/base.html' %}#}
+{#{% block title %}#}
+{#    post list#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#    {% if posts %}#}
+{#    <div class="container-fluid">#}
+{#        <div class="row">#}
+{#            {% for p in posts %}#}
+{#            <div class="col-md-6">#}
+{#                <div class="img-thumbnail">#}
+{#                    <a href="{{ p.get_absolute_url }}"> {{ p.title }} </a> <small> {{ p.created }}</small><br>#}
+{#                    Author : {{ p.author }}<br>#}
+{#                    <p>{{ p.body | truncatechars:400 | safe }}</p>#}
+{#                </div>#}
+{#                <br>#}
+{#            </div>#}
+{#            {% empty %}#}
+{#                <div class="container-fluid">#}
+{#                    <h3>No Posts With search query "{{ request.GET.q }}"</h3>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+{#    {% endif %}#}
+{#{% endblock %}#}
+
 {% extends 'blog/base.html' %}
 {% block title %}
     post list
@@ -10,8 +38,12 @@
             {% for p in posts %}
             <div class="col-md-6">
                 <div class="img-thumbnail">
-                    <a href="{{ p.get_absolute_url }}"> {{ p.title }} </a> <small> {{ p.created }}</small><br>
-                    Author : {{ p.author }}<br>
+                    <div>
+                        <a href="{{ p.get_absolute_url }}"> {{ p.title }} </a>
+                        <small> {{ p.created }}</small>
+                        Author : {{ p.author }}
+                    </div>
+                    <br>
                     <p>{{ p.body | truncatechars:400 | safe }}</p>
                 </div>
                 <br>

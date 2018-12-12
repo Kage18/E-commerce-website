@@ -6,13 +6,16 @@
 {% block content %}
     {% if posts %}
     <div class="container-fluid">
-    <h1>POST LIST</h1>
         <div class="row">
             {% for p in posts %}
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="img-thumbnail">
-                    <a href="{{ p.get_absolute_url }}"> {{ p.title }} </a> <small> {{ p.created }}</small><br>
-                    Author : {{ p.author }}<br>
+                    <div>
+                        <a href="{{ p.get_absolute_url }}"> {{ p.title }} </a>
+                        <small> {{ p.created }}</small>
+                        Author : {{ p.author }}
+                    </div>
+                    <br>
                     <p>{{ p.body | truncatechars:400 | safe }}</p>
                 </div>
                 <br>
