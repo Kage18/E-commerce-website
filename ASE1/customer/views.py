@@ -28,6 +28,8 @@ def QrCode(request,id):
     }
     return render(request,"customer/QrCode.html",context)
 
+
+@login_required
 def profile(request):
     a = request.user
     print(a)
@@ -165,7 +167,7 @@ def itemdetailview(request, pk, ck):
     return render(request, "customer/itemdetail.html", context)
 
 
-@login_required(login_url="http://127.0.0.1:8000/customer/authentication/login/")
+@login_required
 def reviewtext(request, categ, product):
     prod = get_object_or_404(Product, pk=product)
     cat = get_object_or_404(Category, pk=categ)

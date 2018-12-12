@@ -17,7 +17,7 @@ class OrderItem(models.Model):
         return self.product.prod_name
 
     def __unicode__(self):
-        return '%s' % (self.product.prod_name)
+        return '%s' % self.product.prod_name
 
 
 class Order(models.Model):
