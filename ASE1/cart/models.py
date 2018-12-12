@@ -54,7 +54,7 @@ class Order(models.Model):
 class Transaction(models.Model):
     profile = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
     order_id = models.CharField(max_length=120)
-    amount = models.DecimalField(max_digits=100, decimal_places=2)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
     success = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
