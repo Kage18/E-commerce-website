@@ -6,6 +6,7 @@ urlpatterns = [
     path('products/', views.ProductsList.as_view()),
     path('products/<int:pk>/', views.ProductDetail.as_view()),
     path('orders/', views.OrdersList.as_view()),
+    path('orders/<int:pk>', views.OrderDetail.as_view()),
     # path('rest-auth/', include('rest_auth.urls')),
 ]
 

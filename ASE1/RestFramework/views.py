@@ -90,6 +90,24 @@ class OrdersList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
+class OrderDetail(APIView):
+
+    def get_order(self, pk):
+        try:
+            return Order.objects.get(pk=pk)
+        except Order.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        order = self.get_order(pk)
+        serializer = OrderSerializer(order)
+        return Response(serializer.data)
+
+
+    def delete(self, request, pk, format=None):
+        order = self.get_order(pk)
+        order.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 

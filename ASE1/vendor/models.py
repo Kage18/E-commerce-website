@@ -38,7 +38,7 @@ class VendorQty(models.Model):
     qty = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.Vendor.username
+        return self.Vendor.username+'--'+self.product.prod_name
 
 
 class VendorProfile(models.Model):

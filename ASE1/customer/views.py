@@ -17,7 +17,6 @@ def get_user_order(request):
         return ord
     return 0
 
-
 def index(request):
     return render(request, 'customer/base.html')
 
