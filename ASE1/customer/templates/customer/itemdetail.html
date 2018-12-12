@@ -65,79 +65,41 @@
                 </select>
                 <br>
                 Reviews:
-
-                <a name="review">
-                    {% for review in prod.review_set.all %}
+             <a name="review">
+                  {% for review in prod.review_set.all %}
                     <p>{{ review.content }}</p>
                 <div class="star-rating">
-                        {% if review.rating <= 5 %}
-         <input id="star-5" type="radio" name="ratingnew" value="5" checked>
-         <label for="star-5" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% else %}
+                    <input id="star-5_{{ review.pk }}" type="radio" name="ratingnew_{{ review.pk }}" value="5" checked disabled>
+                    <label for="star-5_{{ review.pk }}" title="5 stars">
+                   <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
 
-         <input id="star-5new" type="radio" name="ratingnew" value="5" >
-         <label for="star-5new" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% endif %}
-                        {% if review.rating <= 4 %}
-         <input id="star-4" type="radio" name="ratingnew" value="5" checked>
-         <label for="star-4" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% else %}
-
-         <input id="star-4new" type="radio" name="ratingnew" value="5" >
-         <label for="star-4new" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% endif %}
-                        {% if review.rating <= 3 %}
-         <input id="star-3" type="radio" name="ratingnew" value="5" checked>
-         <label for="star-3" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% else %}
-
-         <input id="star-3new" type="radio" name="ratingnew" value="5" >
-         <label for="star-3new" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% endif %}
-                        {% if review.rating <= 2 %}
-         <input id="star-2" type="radio" name="ratingnew" value="5" checked>
-         <label for="star-2" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% else %}
-
-         <input id="star-2new" type="radio" name="ratingnew" value="5" >
-         <label for="star-2new" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% endif %}
-                        {% if review.rating <= 1 %}
-         <input id="star-1" type="radio" name="ratingnew" value="5" checked>
-         <label for="star-1" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% else %}
-
-         <input id="star-1new" type="radio" name="ratingnew" value="5" >
-         <label for="star-1new" title="5 stars">
-               <i class="active fa fa-star" aria-hidden="true"></i>
-         </label>
-                        {% endif %}
-            </div>
-
-                    <footer class = "blockquote-footer">by <cite>{{ review.customer }}</cite></footer>
-
-                  </a>
+                    <input id="star-4_{{ review.pk }}" type="radio" name="ratingnew_{{ review.pk }}" value="5" checked disabled>
+                    <label for="star-4_{{ review.pk }}" title="5 stars">
+                   <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-3_{{ review.pk }}" type="radio" name="ratingnew_{{ review.pk }}" value="5" checked disabled>
+                    <label for="star-3_{{ review.pk }}" title="5 stars">
+                   <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-2_{{ review.pk }}" type="radio" name="ratingnew_{{ review.pk }}" value="5" checked disabled>
+                    <label for="star-2_{{ review.pk }}" title="5 stars">
+                   <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-1_{{ review.pk }}" type="radio" name="ratingnew_{{ review.pk }}" value="5" checked disabled>
+                    <label for="star-1_{{ review.pk }}" title="5 stars">
+                   <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <script>
+                        console.log($('input[name="ratingnew_{{ review.pk }}"]:radio'));
+                        $($('input[name="ratingnew_{{ review.pk }}"]:radio')[5-{{ review.rating }}])
+                            .prop("checked", true);
+                    </script>
                 </div>
-
-{% endfor %}
+                <footer class = "blockquote-footer">by <cite>{{ review.customer }}</cite></footer>
+              {% endfor %}
+              </a>
+            </div>
 
     </ol>
 {% endblock %}
