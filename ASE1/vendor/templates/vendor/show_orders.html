@@ -40,9 +40,7 @@
                     <th>{{ item.product }}</th>
                     <th>{{ item.qty }}</th>
                     <th>{% multiply item.product.cost item.qty %}</th>
-
                 </tr>
-                <tr><th colspan="2">Total</th></tr>
             {% endif %}
 
         {% endfor %}
