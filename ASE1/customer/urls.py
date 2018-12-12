@@ -12,6 +12,8 @@ urlpatterns = [
     path('home/<int:pk>/<int:ck>/', views.itemdetailview,name='specificitem'),
     path('authentication/', include('actor_authentication.urls')),
     path('search_results/', views.Search_Results, name="search_results"),
+    path('faq/', views.faq, name='faq'),
+    path('profile/', views.about_us, name='about_us'),
     path('profile/', views.profile, name='profile'),
     path('password_reset/', PasswordResetView.as_view(), name='forgot_pass'),
     path('password_reset_done/', PasswordResetDoneView.as_view(), name='password_reset_done'),

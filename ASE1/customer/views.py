@@ -17,16 +17,18 @@ def get_user_order(request):
         return ord
     return 0
 
+
 def index(request):
     return render(request, 'customer/base.html')
 
-def QrCode(request,id):
-    This_Order = get_object_or_404(Order,id=id)
+
+def QrCode(request, id):
+    This_Order = get_object_or_404(Order, id=id)
     string = This_Order.get_qr_code()
     context = {
-        "string":string,
+        "string": string,
     }
-    return render(request,"customer/QrCode.html",context)
+    return render(request, "customer/QrCode.html", context)
 
 
 @login_required
@@ -111,10 +113,10 @@ def list_categories(request):
         except:
             pass
     context = {
-        "is_vendor":is_vendor,
+        "is_vendor": is_vendor,
         'categories': categories,
     }
-    return render(request, 'customer/index.html',context)
+    return render(request, 'customer/index.html', context)
 
 
 def customer_signup(request):
@@ -177,6 +179,13 @@ def itemdetailview(request, pk, ck):
     }
     return render(request, "customer/itemdetail.html", context)
 
+
+def faq(request):
+    return render(request, 'customer/faqs.html')
+
+
+def about_us(request):
+    return render(request, 'customer/about_us.html')
 
 
 @login_required

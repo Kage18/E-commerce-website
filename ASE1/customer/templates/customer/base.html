@@ -3,26 +3,18 @@
 <html>
 <head>
 <title>Grocery Store</title>
-<!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Grocery Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="{% static 'customer/css/review.css' %}" >
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="{% static 'customer/css/review.css' %}" >
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- //for-mobile-apps -->
 <link href="{% static 'customer/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
 <link href="{% static 'customer/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
-<!-- font-awesome icons -->
 <link href="{% static 'customer/css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all" />
 <!-- //font-awesome icons -->
-<!-- js -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -141,29 +133,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="col-md-3 footer_grid">
 				<h3>information</h3>
 				<ul class="footer_grid_list">
-					<li><a href="#">About Us</a></li>
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">Best Deals</a></li>
-					<li><a href="#">Services</a></li>
-					<li><a href="#">Short Codes</a></li>
-				</ul>
+					<li><a href="{% url 'customer:about_us' %}">About Us</a></li>
 			</div>
 			<div class="col-md-3 footer_grid">
 				<h3>policy info</h3>
 				<ul class="footer_grid_list">
-					<li><a href="{% url 'blog:post_list' %}">FAQ</a></li>
-					<li><a href="#">privacy policy</a></li>
-					<li><a href="#">terms of use</a></li>
+					<li><a href="{% url 'blog:post_list' %}">Blog</a></li>
+                    <li><a href="{% url 'customer:faq' %}">FAQ's</a></li>
 				</ul>
 			</div>
 			<div class="col-md-3 footer_grid">
 				<h3>what in stores</h3>
 				<ul class="footer_grid_list">
-					<li><a href="#">Pet Food</a></li>
-					<li><a href="#">Frozen Snacks</a></li>
-					<li><a href="#">Kitchen</a></li>
-					<li><a href="#">Branded Foods</a></li>
-					<li><a href="#">Households</a></li>
+					<li><a href="#">Home Needs</a></li>
+					<li><a href="#">Groceries</a></li>
+					<li><a href="#">Fruits/Veg</a></li>
+					<li><a href="#">Beverages</a></li>
+					<li><a href="#">Dairy</a></li>
+                    <li><a href="#">Personal Care</a></li>
 				</ul>
 			</div>
 			<div class="clearfix"> </div>
@@ -172,11 +159,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="footer_grid_bottom">
 						<h5>connect with us</h5>
 						<ul class="social_icons">
-							<li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                            <li><a href="https://www.github.com/jiteshm17/ASE1_Clean" class="fa-github"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+							<li><a href="https://www.facebook.com" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+							<li><a href="https://www.google.com" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+
 						</ul>
 					</div>
 				</div>
