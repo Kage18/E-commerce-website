@@ -178,9 +178,6 @@
                                 {% if item.brand|length > 0 %}
                                     <li>Brand: <b>{{ item.brand }}</b></li>
                                 {% endif %}
-                                <li><a href="{% url 'vendor:delete_product' item.id %}"><button type="button" class="btn btn-warning">Delete</button>
-                                </a>
-                                </li>
                             </ul>
                             <br>
                         </div>

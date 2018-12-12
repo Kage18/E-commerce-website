@@ -33,9 +33,7 @@
 {% endblock %}
 
 {% block content %}
-    <ol>
-        <li>
-                Name: <b>{{ prod.prod_name }}</b>
+                <b>{{ prod.prod_name }}</b>
                 <ul>
                     {% if prod.prod_pic %}
                         <img src="{{ prod.prod_pic.url }}" width="200" height="200">
@@ -53,7 +51,7 @@
                                 <a class="btn btn-warning cart-add">Add to Cart</a>
                     {% endif %}
                     </span>
-                <a href="{% url 'customer:review'  cat.id prod.id  %}"><h3 style="margin-left:40em">write a review</h3></a>
+                <a href="{% url 'customer:review'  cat.id prod.id  %}"><h3 style="margin-left:40em">Write a review</h3></a>
                 </ul>
             </li>
             <br>
@@ -100,6 +98,4 @@
               {% endfor %}
               </a>
             </div>
-
-    </ol>
 {% endblock %}
