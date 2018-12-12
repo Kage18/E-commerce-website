@@ -178,29 +178,19 @@ def itemdetailview(request, pk, ck):
     return render(request, "customer/itemdetail.html", context)
 
 
+
 @login_required
 def reviewtext(request, categ, product):
     prod = get_object_or_404(Product, pk=product)
     cat = get_object_or_404(Category, pk=categ)
     if request.method == 'POST':
-
         form = writereview(request.POST)
-
         if form.is_valid():
-            p = 0
             content = request.POST.get('content')
             rating = request.POST.get('rating')
-            k = Review.objects.all()
-            for i in k:
-                if i.customer == request.user and i.category == cat and i.product == prod:
-                    i.rating = rating
-                    i.content = content
-                    p = 1
-                    i.save()
-            if p == 0:
-                review1 = Review.objects.create(category=cat, product=prod, customer=request.user, content=content,
-                                                rating=rating)
-                review1.save()
+            review1 = Review.objects.create(category=cat, product=prod, customer=request.user, content=content,
+                                            rating=rating)
+            review1.save()
             return redirect('/customer/home/' + str(categ) + '/' + str(product) + '/')
     else:
         form = writereview()
