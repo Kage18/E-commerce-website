@@ -16,12 +16,15 @@ class OrderItem(models.Model):
     def __str__(self):
         return self.product.prod_name
 
+    def __unicode__(self):
+        return '%s' % (self.product.prod_name)
+
 
 class Order(models.Model):
     vendor = models.ManyToManyField(User)
     owner = models.ForeignKey(CustomerProfile, on_delete=models.SET_NULL, null=True, related_name='o')
     ref_code = models.CharField(max_length=20)
-    items = models.ManyToManyField(OrderItem)
+    items = models.ManyToManyField(OrderItem, related_name='item')
     is_ordered = models.BooleanField(default=False)
     date_ordered = models.DateTimeField(null=True)
 
@@ -38,7 +41,7 @@ class Order(models.Model):
         string += "Date Ordered :  " + str(self.date_ordered) + "\n\n"
         string += "Item : Quantity\n"
         for item in OrderItem.objects.filter(order=self):
-            string += str(item.product.prod_name) + " : " + str(item.qty)+ "\n"
+            string += str(item.product.prod_name) + " : " + str(item.qty) + "\n"
         string += "Total is  :  ₹" + str(self.get_cart_total()) + "\n"
         string += "\nThank You"
         # print(string)

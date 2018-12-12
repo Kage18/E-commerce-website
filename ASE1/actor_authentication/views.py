@@ -109,9 +109,10 @@ def login_all(request):
             if next == "":
                 return redirect('customer:home')
             else:
-                if 'nextto' in request.GET:
+                if 'nextto'and'vendorid' in request.GET:
                     nextto = request.GET['nextto']
-                    return redirect(next + '?nextto=' + nextto)
+                    vendorid = request.GET['vendorid']
+                    return redirect(next + '?nextto=' + nextto +'&vendorid='+vendorid)
                 else:
                     return redirect(next)
 

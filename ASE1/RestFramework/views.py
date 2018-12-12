@@ -6,15 +6,16 @@ from vendor.models import Product, Category
 from django.http import Http404
 from rest_framework.response import Response
 from vendor.serializers import ProductSerializer
+from cart.models import Order
 from rest_framework import status
-
+from cart.serializers import OrderSerializer
 
 class ProductsList(APIView):
-    def get_object(self):
-        try:
-            return Product.objects.get(pk=pk)
-        except Product.DoesNotExist:
-            raise Http404
+    # def get_object(self):
+    #     try:
+    #         return Product.objects.get(pk=pk)
+    #     except Product.DoesNotExist:
+    #         raise Http404
 
     def get(self, request, format=None):
         products = Product.objects.all()
@@ -66,3 +67,44 @@ class ProductDetail(APIView):
         product = self.get_products(pk)
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+class OrdersList(APIView):
+    # def get_object(self):
+    #     try:
+    #         return Order.objects.get(pk=pk)
+    #     except Order.DoesNotExist:
+    #         raise Http404
+
+    def get(self, request, format=None):
+        orders = Order.objects.all()
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = OrderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
