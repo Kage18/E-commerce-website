@@ -1,0 +1,93 @@
+{% extends 'customer/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	<div class="banner">
+		<div class="banner_nav_left">
+			<nav class="navbar nav_bottom">
+			 <!-- Brand and toggle get grouped for better mobile display -->
+			  <div class="navbar-header nav_2">
+				  <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+			  </div> 
+			   <!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<ul class="nav navbar-nav nav_1">
+						<li><a href="#">Personal care</a></li>
+						<li><a href="#">Dairy</a></li>
+						<li><a href="#">Beverages</a></li>
+						<li><a href="#">Fruits/Veg</a></li>
+						<li><a href="#">Groceries</a></li>
+						<li><a href="#">Home Needs</a></li>
+					</ul>
+				 </div><!-- /.navbar-collapse -->
+			</nav>
+		</div>
+		<div class="banner_nav_right">
+			<section class="slider">
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<div class="banner_nav_right_banner">
+							</div>
+						</li>
+						<li>
+							<div class="banner_nav_right_banner1">
+							</div>
+						</li>
+						<li>
+							<div class="banner_nav_right_banner2">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<!-- flexSlider -->
+				<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" property="" />
+				<script defer src="js/jquery.flexslider.js"></script>
+				<script type="text/javascript">
+				$(window).load(function(){
+				  $('.flexslider').flexslider({
+					animation: "slide",
+					start: function(slider){
+					  $('body').removeClass('loading');
+					}
+				  });
+				});
+			  </script>
+			<!-- //flexSlider -->
+		</div>
+	<div class="clearfix"></div>
+	</div>
+
+		<div class="privacy about">
+			<h3>About Us</h3>
+			<p class="animi">We are a leading distributor of fresh grocery products produced and processed right in your neighbourhood to your home directly from your computer or mobile phone. You can choose from over hundreds of products spread across various categories such as grocery, bakery, fruits & vegetables, beverages, personal care products, baby care products, pet products and much more. It's so simple that all you just have to register and order from the comforts of your home.</p>
+			<div class="agile_about_grids">
+				<div class="col-md-6 agile_about_grid_right">
+					<img src="images/31.jpg" alt=" " class="img-responsive" />
+				</div>
+				<div class="col-md-6 agile_about_grid_left">
+					<ol>
+						<li>Easily order your favourite grocery from comforts of your home</li>
+						<li>Dedicated blog for all your problems.</li>
+						<li>Different categories containing hundreds of unique products to satisfy all your needs.</li>
+						<li>Easy and smooth interface for vendor to efficienty run their operations</li>
+						<li>Notifications and confirmations sent to Users and Vendors for their information</li>
+						<li>All our product are fresh and safe.</li>
+					</ol>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+{% endblock %}
