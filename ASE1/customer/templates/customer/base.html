@@ -75,6 +75,7 @@
                                 {% if user.is_authenticated %}
                                     <li><a href="{% url 'customer:actor_authentication:logout' %}">Logout</a></li>
                                     <li><a href="{% url 'customer:profile' %}">UserProfile</a></li>
+                                    <li><a href="{% url 'customer:show-orders' %}">Show my orders</a> </li>
                                     {% if is_vendor %}
                                         <li><a href="{% url 'vendor:view_products' %}">View Products</a></li>
                                     {% endif %}

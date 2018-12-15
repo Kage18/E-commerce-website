@@ -1,0 +1,50 @@
+{% extends 'customer/base.html' %}
+{% load customer_filters %}
+{% load qr_code %}
+{% block content %}
+    {% if ordre %}
+            <table border="5" class="table table-hover table-bordered text-center">
+            <thead class="thead-dark">
+                <tr class="text-center">
+                    <th>Date ordered: <br></th>
+                    <th>Order_Id</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>QR Code</th>
+                </tr>
+                </thead>
+            {% for o in ordre %}
+                <tr>
+                    <td>{{ o.date_ordered }}</td>
+                    <td>{{ o.ref_code }}</td>
+                    <td>
+                    <table border="5" class="table table-hover table-bordered text-center">
+                    <thead class="thead-dark"><tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                     </tr></thead>
+                        {% for item in o.items.all %}
+                            <tr>
+                    <th>{{ item.product }}</th>
+                    <th>{{ item.qty }}</th>
+                    <th>{% multiply item.product.cost item.qty %}</th>
+                </tr>
+                        {% endfor %}
+                    </table>
+                    </td>
+                    <td>
+                        ₹{{ o.get_cart_total }}
+                    </td>
+                    <td>
+                        <div>
+                            {% qr_from_text o.get_qr_code size="T" %}
+                            <br>
+                            <a href="{% url 'customer:QrCode' o.id %}" download="{{ o }}">Download QrCode</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </table><br>
+        {% endif %}
+{% endblock %}

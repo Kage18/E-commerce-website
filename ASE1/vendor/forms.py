@@ -10,14 +10,7 @@ class ProductsAdd(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
-        exclude = ['qty']
-
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #
-    #     count = Product.objects.filter(prod_name=product['prod_name'])
-    #     if count > 0:
-    #         raise forms.ValidationError('The product already exists')
+        exclude = ['qty', 'stock']
 
 
 def email_check(user):

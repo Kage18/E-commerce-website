@@ -31,6 +31,7 @@ def customer_signup(request):
             Customer_Prof.phone_number = PhNo
             Customer_Prof.address = addr
             Customer_Prof.save()
+            
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
             message = render_to_string('actor_authentication/actimail.html', {
@@ -109,10 +110,10 @@ def login_all(request):
             if next == "":
                 return redirect('customer:home')
             else:
-                if 'nextto'and'vendorid' in request.GET:
+                if 'nextto' and 'vendorid' in request.GET:
                     nextto = request.GET['nextto']
                     vendorid = request.GET['vendorid']
-                    return redirect(next + '?nextto=' + nextto +'&vendorid='+vendorid)
+                    return redirect(next + '?nextto=' + nextto + '&vendorid=' + vendorid)
                 else:
                     return redirect(next)
 

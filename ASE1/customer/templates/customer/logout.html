@@ -2,8 +2,13 @@
 {% block content %}
 
 <h2>Dear Customer, You have been successfully logged out</h2><br>
-<a href="{% url 'customer:actor_authentication:login_all' %}">Click here to log back in</a><br>
-<a href="{% url 'customer:actor_authentication:signup_all' %}">Click here to Sign up</a><br>
-<a href="{% url 'customer:home' %}">Click here to go to the home page</a>
+<div class="row justify-content-center">
+    <a href="{% url 'customer:actor_authentication:login_all' %}" class="d-inline-block m-3">
+        <button type="button" class="btn btn-success d-inline-block">Click here to log back in</button></a>
 
+    <a href="{% url 'customer:actor_authentication:signup_all' %}" class="d-inline-block m-3"><button type="button" class="btn btn-success d-inline-block">
+        Click here to Sign up</button></a>
+
+    <a href="{% url 'customer:home' %}" class="d-inline-block m-3"><button type="button" class="btn btn-success d-inline-block">Click here to go to the home page</button></a>
+</div>
 {% endblock %}

@@ -15,6 +15,8 @@ urlpatterns = [
     path('faq/', views.faq, name='faq'),
     path('about-us/', views.about_us, name='about_us'),
     path('profile/', views.profile, name='profile'),
+    path('show-orders/',views.show_orders,name='show-orders'),
+
     path('password_reset/', PasswordResetView.as_view(), name='forgot_pass'),
     path('password_reset_done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('password_reset_confirm/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),

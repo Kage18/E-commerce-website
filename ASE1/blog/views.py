@@ -3,12 +3,14 @@ from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .forms import *
 from django.shortcuts import get_object_or_404, render
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from blog.models import Post
 from django.template.loader import render_to_string
+
+
 # Create your views here.
 def post_list(request):
     posts = Post.published.all()
@@ -21,44 +23,47 @@ def post_list(request):
             Q(body__icontains=query)
         )
     context = {
-        "posts":posts,
+        "posts": posts,
     }
-    return render(request,'blog/post_list.html',context)
+    return render(request, 'blog/post_list.html', context)
 
-@login_required
+
+@login_required(login_url='customer:actor_authentication:login_all')
 def user_posts(request):
     user = None
     try:
         user = User.objects.get(username=request.user.username)
     except:
         return HttpResponse("No user with this id")
-    posts = Post.objects.filter(author=user,status__exact="published")
+    posts = Post.objects.filter(author=user, status__exact="published")
     context = {
-        'posts':posts,
+        'posts': posts,
     }
-    return render(request,"blog/my_posts.html",context)
+    return render(request, "blog/my_posts.html", context)
 
-@login_required
+
+@login_required(login_url='customer:actor_authentication:login_all')
 def user_drafts(request):
     user = None
     try:
         user = User.objects.get(username=request.user.username)
     except:
         return HttpResponse("No user with this id")
-    posts = Post.objects.filter(author=user,status__exact="draft")
+    posts = Post.objects.filter(author=user, status__exact="draft")
     context = {
-        'posts':posts,
+        'posts': posts,
     }
-    return render(request,"blog/my_drafts.html",context)
+    return render(request, "blog/my_drafts.html", context)
+
 
 def post_detail(request, id, slug):
-    post=get_object_or_404(Post,id=id,slugthing=slug)
+    post = get_object_or_404(Post, id=id, slugthing=slug)
     comments = Comment.objects.filter(post=post).order_by('-id')
     if request.method == "POST":
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             content = request.POST.get('content')
-            comment = Comment.objects.create(user=request.user,content=content,post=post)
+            comment = Comment.objects.create(user=request.user, content=content, post=post)
             comment.save()
             return HttpResponseRedirect(post.get_absolute_url())
     else:
@@ -69,14 +74,15 @@ def post_detail(request, id, slug):
         is_liked = True
     context = {
         'post': post,
-        'is_liked':is_liked,
-        'comments':comments,
-        'total_likes':post.total_likes(),
-        'comment_form':comment_form,
+        'is_liked': is_liked,
+        'comments': comments,
+        'total_likes': post.total_likes(),
+        'comment_form': comment_form,
     }
-    return render(request, 'blog/post_detail.html' ,context)
+    return render(request, 'blog/post_detail.html', context)
 
-@login_required
+
+@login_required(login_url='customer:actor_authentication:login_all')
 def post_create(request):
     if request.method == 'POST':
         form = PostCreationForm(request.POST)
@@ -90,7 +96,7 @@ def post_create(request):
     context = {
         'form': form,
     }
-    return render(request,'blog/post_create.html',context)
+    return render(request, 'blog/post_create.html', context)
 
 
 def user_logout(request):
@@ -98,10 +104,9 @@ def user_logout(request):
     return redirect('blog:post_list')
 
 
-
-@login_required
+@login_required(login_url='customer:actor_authentication:login_all')
 def like_post(request):
-    post = get_object_or_404(Post,id = request.POST.get('id'))
+    post = get_object_or_404(Post, id=request.POST.get('id'))
     is_liked = True
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
@@ -112,11 +117,12 @@ def like_post(request):
     context = {
         'post': post,
         'is_liked': is_liked,
-        'total_likes':post.total_likes(),
+        'total_likes': post.total_likes(),
     }
     if request.is_ajax():
-        html = render_to_string('blog/like_section.html',context,request=request)
-        return JsonResponse({'form':html})
+        html = render_to_string('blog/like_section.html', context, request=request)
+        return JsonResponse({'form': html})
+
 
 def post_edit(request, id):
     print('check 1')
@@ -126,7 +132,7 @@ def post_edit(request, id):
         return HttpResponse("Not your post to Edit")
     if request.method == 'POST':
         print('check 3')
-        form = PostEditForm(request.POST,instance=post)
+        form = PostEditForm(request.POST, instance=post)
         print('check 4')
         if form.is_valid():
             form.save()
@@ -134,13 +140,14 @@ def post_edit(request, id):
     else:
         form = PostEditForm(instance=post)
     context = {
-        'form':form,
-        'post':post,
+        'form': form,
+        'post': post,
     }
-    return render(request,'blog/post_edit.html',context)
+    return render(request, 'blog/post_edit.html', context)
 
-def post_delete(request,id):
-    post = get_object_or_404(Post,id=id)
+
+def post_delete(request, id):
+    post = get_object_or_404(Post, id=id)
     if request.user != post.author:
         return HttpResponse('It is not your Post to delete')
     post.delete()

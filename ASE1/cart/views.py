@@ -125,7 +125,7 @@ def update_transaction_records(request):
 
     send_mail(subject, message, email_from, recipient_list, fail_silently=False, html_message=html)
     messages.info(request, "Thank you! Your purchase was successful!")
-    return redirect(reverse('customer:profile'))
+    return redirect(reverse('customer:show-orders'))
 
 
 def qtyupdate(request):

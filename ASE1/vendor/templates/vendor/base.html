@@ -139,29 +139,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="col-md-3 footer_grid">
 				<h3>information</h3>
 				<ul class="footer_grid_list">
-					<li><a href="#">About Us</a></li>
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">Best Deals</a></li>
-					<li><a href="#">Services</a></li>
-					<li><a href="#">Short Codes</a></li>
-				</ul>
+					<li><a href="{% url 'customer:about_us' %}">About Us</a></li>
 			</div>
 			<div class="col-md-3 footer_grid">
 				<h3>policy info</h3>
 				<ul class="footer_grid_list">
-					<li><a href="#">FAQ</a></li>
-					<li><a href="#">privacy policy</a></li>
-					<li><a href="#">terms of use</a></li>
+                    <li><a href="{% url 'customer:faq' %}">FAQ's</a></li>
 				</ul>
 			</div>
 			<div class="col-md-3 footer_grid">
-				<h3>what in stores</h3>
+				<h3>Get in Touch</h3>
 				<ul class="footer_grid_list">
-					<li><a href="#">Pet Food</a></li>
-					<li><a href="#">Frozen Snacks</a></li>
-					<li><a href="#">Kitchen</a></li>
-					<li><a href="#">Branded Foods</a></li>
-					<li><a href="#">Households</a></li>
+                    <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
 				</ul>
 			</div>
 			<div class="clearfix"> </div>
@@ -170,11 +159,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="footer_grid_bottom">
 						<h5>connect with us</h5>
 						<ul class="social_icons">
-							<li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-							<li><a href="#" class="dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                            <li><a href="https://www.github.com/jiteshm17/ASE1_Clean" class="fa-github"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+							<li><a href="https://www.facebook.com" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+							<li><a href="https://www.google.com" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+
 						</ul>
 					</div>
 				</div>

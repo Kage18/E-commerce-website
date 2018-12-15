@@ -163,11 +163,11 @@
         <div class="container">
             <div class="row">
                 {% for item in products %}
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <div class="product-grid6">
 
                             <a href="{% url 'vendor:modify_products'  item.id %}"
-                                     target="_blank" style="color:black"><span style="font-size:20px"><b>{{ item.prod_name }}</b></span></a>
+                                     target="_blank" style="color:black"><span style="font-size:20px"><b>{{ item.prod_name }}</b></span>
                             <ul>
                                 {% if item.prod_pic %}
                                     <div class="product-image6"> <img src="{{ item.prod_pic.url }}" ></div>
@@ -179,6 +179,7 @@
                                     <li>Brand: <b>{{ item.brand }}</b></li>
                                 {% endif %}
                             </ul>
+                            </a>
                             <br>
                         </div>
                     </div>
